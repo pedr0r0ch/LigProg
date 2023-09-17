@@ -1,14 +1,15 @@
 #include "classeGestorAcademico.h"
+#include "funcoesGlobais.h"
 
-GestorAcademico :: GestorAcademico (tipoSemestre periodoVigenteConstrutor, vector<Disciplina> vetorDisciplinasConstrutor, vector<Aluno> vectorAlunosConstrutor) {
+GestorAcademico :: GestorAcademico (tipoSemestre semestreVigenteConstrutor, vector<Disciplina> vetorDisciplinasConstrutor, vector<Aluno> vectorAlunosConstrutor) {
 
     vetorDisciplinas = vetorDisciplinasConstrutor;
     vetorAlunos = vectorAlunosConstrutor;
-    periodoVigente = periodoVigenteConstrutor;
+    semestreVigente = semestreVigenteConstrutor;
 };
 
 void GestorAcademico :: evolucaoNotasFinais(){
-    for()
+    
 };
 
 void GestorAcademico :: agruparDisciplinasAdm(){
@@ -20,6 +21,20 @@ void GestorAcademico :: agruparDisciplinasAlunos(){
 };
 
 void GestorAcademico :: exibirDisciplinaMaiorMedia(){
+    unsigned short  indice,
+                    indiceMaiorMedia,
+                    maiorMedia = 0;
+
+    for(indice = 0; indice < vetorDisciplinas.size(); indice++){
+        if (vetorDisciplinas[indice].getMediaTurma() > maiorMedia){
+            maiorMedia = vetorDisciplinas[indice].getMediaTurma();
+            indiceMaiorMedia = indice;
+        }
+    }
+    //verificar implementacionabilidade da funcao Print()
+    ExibirMensagem( "A disciplina que obteve a maior media foi:",  vetorDisciplinas[indiceMaiorMedia].nomeDisciplina,
+                    "Com media equivalente de: ", vetorDisciplinas[indiceMaiorMedia].getMediaTurma(), ".");
+
 
 };
 
@@ -33,12 +48,13 @@ void GestorAcademico :: exibirAlunoMaiorMedia(){
                     maiorMedia = 0;
 
     for(indice = 0; indice < vetorAlunos.size(); indice++){
-        if (vetorAlunos[indice].getMedia > maiorMedia){
-            maiorMedia = vetorAlunos[indice].getMedia;
+        if (vetorAlunos[indice].getMedia() > maiorMedia){
+            maiorMedia = vetorAlunos[indice].getMedia();
             indiceMaiorMedia = indice;
         }
     }
-    Print( "O aluno que possui a maior media eh o aluno:",  vetorAlunos[indiceMaiorMedia].nomeAluno,
-           "Com media equivalente de: ", vetorAlunos[indiceMaiorMedia].getMedia, ".");
+    //verificar implementacionabilidade da funcao Print()
+    ExibirMensagem( "O aluno que possui a maior media eh o aluno:",  vetorAlunos[indiceMaiorMedia].nomeAluno,
+                    "Com media equivalente de: ", vetorAlunos[indiceMaiorMedia].getMedia(), ".");
 
 };

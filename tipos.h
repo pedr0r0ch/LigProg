@@ -1,19 +1,23 @@
 #ifndef __TIPOS__ 
 #define __TIPOS__
 
+#include <iostream>
+#include <string>
 #include <vector>
 #include <ctime>
+
+using namespace std;
+
+typedef struct{
+    unsigned short ano;
+    unsigned short semestreLetivo;
+}tipoSemestre;
 
 typedef struct{
     float grauObtido;
     tipoSemestre semestre;
     string disciplina;
 }tipoNota;
-
-typedef struct{
-    unsigned short ano;
-    unsigned short semestreLetivo;
-}tipoSemestre;
 
 typedef enum{
     sucesso=0,

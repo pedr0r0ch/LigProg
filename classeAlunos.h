@@ -12,7 +12,7 @@ using namespace std;
 class Aluno {
     
     public:
-        Aluno(string, vector<float>, vector<string>);
+        Aluno(string, vector<tipoNota>);
         
         string nomeAluno;
         

@@ -5,7 +5,7 @@
 #include "classeAlunos.h"
 #include "classeDisciplina.h"
 #include "tipos.h"
-
+    
 using namespace std;
 
 class GestorAcademico{
@@ -14,7 +14,7 @@ class GestorAcademico{
         GestorAcademico(tipoSemestre, vector<Disciplina>, vector<Aluno>);
         //construtor
 
-        void evoulucaoNotasFinais(); 
+        void evolucaoNotasFinais(); 
         //exibe a evolucao das notas finais dos alunos em 5 disciplinas nos ultimos periodos
 
         void agruparDisciplinasAdm();
@@ -36,7 +36,7 @@ class GestorAcademico{
         //Exibe o aluno com maior media de ultimo periodo
     
     private:
-        tipoPeriodo periodoVigente;
+        tipoSemestre semestreVigente;
         vector<Disciplina> vetorDisciplinas;
         vector<Aluno> vetorAlunos;
 };

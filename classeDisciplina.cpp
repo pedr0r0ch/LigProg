@@ -1,12 +1,10 @@
 #include "classeDisciplina.h"
 
-Disciplina :: Disciplina( string nomeDisciplina, tipoSemestre periodoAtual,\
-                          vector<Aluno> vetorAlunos, vector<float> vetorNotas){
-    nome = nomeDisciplina;
-    periodo = periodoAtual;
-    
+Disciplina :: Disciplina( string nome, tipoSemestre semestreConstrutor,\
+                          vector<Aluno> vetorAlunos){
+    nomeDisciplina = nome;
+    semestre = semestreConstrutor;
     alunosCursantes = vetorAlunos;
-    notasFinais = vetorNotas;
     setMediaTurma();
 };
 
@@ -22,4 +20,6 @@ void Disciplina :: setMediaTurma(){
 
 };
 
-float Disciplina :: getMediaTurma();
+float Disciplina :: getMediaTurma(){
+    return mediaTurma;
+};

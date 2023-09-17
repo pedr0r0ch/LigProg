@@ -6,6 +6,7 @@
 #include <string>
 
 #include "tipos.h"
+#include "funcoesGlobais.h"
 #include "classeAlunos.h"
 
 using namespace std;
@@ -15,7 +16,7 @@ class Disciplina {
     
     public:
 
-        Disciplina(string, tipoSemestre, vector<Aluno>, vector<float>);
+        Disciplina(string, tipoSemestre, vector<Aluno>);
 
         string nomeDisciplina;
 
@@ -26,6 +27,7 @@ class Disciplina {
         tipoSemestre getSemestre();
     
     private:
+
         tipoSemestre semestre;
         unsigned short mediaTurma;
         vector <Aluno> alunosCursantes;

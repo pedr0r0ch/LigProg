@@ -1,4 +1,5 @@
 #include "classeAlunos.h"
+#include "funcoesGlobais.h"
 
 Aluno::Aluno(string nome, vector<tipoNota> informacoesAcademicas){
     nomeAluno = nome;
@@ -19,10 +20,16 @@ void Aluno::setMediaAluno(){
 
 float Aluno :: getGrauObtido(string disciplina){
     unsigned short indice;
-    for(indice = 0; indice < grauDisciplinaPeriodo.size(), indice++){
+    for(indice = 0; indice < grauDisciplinaPeriodo.size(); indice++){
         if (grauDisciplinaPeriodo[indice].disciplina == disciplina)
             return grauDisciplinaPeriodo[indice].grauObtido;
     }
+    
     ExibirMensagemErro(disciplinaNaoConsta);
     return disciplinaNaoConsta;
+};
+
+float Aluno :: getMedia (){
+    return media;
+
 };

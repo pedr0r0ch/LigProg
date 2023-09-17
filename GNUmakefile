@@ -9,6 +9,7 @@ TARGET = primeiro_entregavel
 CPP = classeAlunos.cpp\
 	  classeDisciplina.cpp\
 	  classeGestorAcademico.cpp\
+	  funcoesGlobais.cpp\
 	  main.cpp
 
 # Lista de arquivos-objeto gerados a partir dos arquivos-fonte
