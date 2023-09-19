@@ -14,8 +14,13 @@ class GestorAcademico{
         GestorAcademico(tipoSemestre, vector<Disciplina>, vector<Aluno>);
         //construtor
 
+        tipoErros setDesempenhoDisciplinas(unsigned short); //calcula as medias moveis das disciplinas\
+        e guarda em um vetor com elementos do tipo estrutura tipoDesempenhoDisciplina que guarda a media movel,\
+        o nome da disciplina e a quantidade de periodos utilizados para fazer a media movel
+
         void evolucaoNotasFinais(); 
-        //exibe a evolucao das notas finais dos alunos em 5 disciplinas nos ultimos periodos
+        //exibe a evolucao das notas finais dos alunos em 5 disciplinas nos ultimos periodos\
+        calculando a media movel de n periodos anteriores ao atual
 
         void agruparDisciplinasAdm();
         //agrupa disciplinas que obtiveram uma melhoria no \
@@ -36,7 +41,10 @@ class GestorAcademico{
         //Exibe o aluno com maior media de ultimo periodo
     
     private:
+
         tipoSemestre semestreVigente;
-        vector<Disciplina> vetorDisciplinas;
-        vector<Aluno> vetorAlunos;
+        
+        vector <tipoDesempenhoDisciplina> desempenhoDisciplinas; 
+        vector <Disciplina>               vetorDisciplinas;
+        vector <Aluno>                    vetorAlunos;
 };

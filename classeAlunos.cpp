@@ -13,7 +13,7 @@ void Aluno::setMediaAluno(){
                    soma;
 
     for(indice = 0; indice < grauDisciplinaPeriodo.size(); indice++)
-        soma = grauDisciplinaPeriodo[indice].grauObtido;
+        soma = grauDisciplinaPeriodo[indice].grau_obtido;
 
     media = (soma / (indice + 1));
 };
@@ -21,8 +21,8 @@ void Aluno::setMediaAluno(){
 float Aluno :: getGrauObtido(string disciplina){
     unsigned short indice;
     for(indice = 0; indice < grauDisciplinaPeriodo.size(); indice++){
-        if (grauDisciplinaPeriodo[indice].disciplina == disciplina)
-            return grauDisciplinaPeriodo[indice].grauObtido;
+        if (grauDisciplinaPeriodo[indice].nome_disciplina == disciplina)
+            return grauDisciplinaPeriodo[indice].grau_obtido;
     }
     
     ExibirMensagemErro(disciplinaNaoConsta);

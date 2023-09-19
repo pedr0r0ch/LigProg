@@ -10,14 +10,20 @@ using namespace std;
 
 typedef struct{
     unsigned short ano;
-    unsigned short semestreLetivo;
+    unsigned short semestre;
 }tipoSemestre;
 
 typedef struct{
-    float grauObtido;
+    float grau_obtido;
     tipoSemestre semestre;
-    string disciplina;
+    string nome_disciplina;
 }tipoNota;
+
+typedef struct{
+    string nome_disciplina;
+    float media_movel;
+    unsigned short n_periodos;
+} tipoDesempenhoDisciplina;
 
 typedef enum{
     sucesso=0,
@@ -25,5 +31,10 @@ typedef enum{
     ou seja, alguma disciplina esta sem nota ou alguma nota esta sem disciplina.
     disciplinaNaoConsta //uma disciplina que estava sendo procurada nao consta no sitema.
 }tipoErros;
+
+typedef enum {
+    desabilitado = 0, //sinal desabilitado (pegar um numero sem sinal)
+    habilitado = 1 //sinal habilitadado (pegar um numero com sinal) 
+}tipoSinal;
 
 #endif

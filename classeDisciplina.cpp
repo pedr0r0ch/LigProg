@@ -23,3 +23,7 @@ void Disciplina :: setMediaTurma(){
 float Disciplina :: getMediaTurma(){
     return mediaTurma;
 };
+
+tipoSemestre Disciplina :: getSemestre (){
+    return semestre;
+};

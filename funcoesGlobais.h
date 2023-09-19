@@ -6,11 +6,23 @@
 
 void ExibirMensagemErro(tipoErros);
 
+template<typename tipoGenerico>
+short getNumero(tipoSinal sinal, tipoGenerico limiteInferior, tipoGenerico limiteSuperior)
+{
+ if (sinal = habilitado){
+    short numeroComSinal;
+    return numeroComSinal;
+ };
+  unsigned short numeroSemSinal;
+ return numeroSemSinal;
+};
+
 template<typename... tipoGenerico>
 void ExibirMensagem(tipoGenerico... argumento)
 {
     ((cout << argumento << " "), ...);
     cout << endl;
 };
+
 
 #endif  
