@@ -8,33 +8,15 @@ GestorAcademico :: GestorAcademico (tipoSemestre semestreVigenteConstrutor, vect
     semestreVigente = semestreVigenteConstrutor;
 };
 
-tipoErros GestorAcademico :: setDesempenhoDisciplinas(unsigned short nPeriodos){
+tipoErros GestorAcademico :: setDesempenhoDisciplinas(unsigned short nPeriodos, tipoSemestre semestreVigente_){
     
-    unsigned short  nPeriodosCopia = nPeriodos - 1,
-                    indice,
+    unsigned short  indice,
                     indice_,
                     __NOT_FOUND__;
 
     tipoSemestre indiceSemestre;
 
-    indiceSemestre = semestreVigente;
-
-    
-    while(nPeriodosCopia != 0){
-        switch(indiceSemestre.semestre){
-            case 1:
-                indiceSemestre.semestre = 2;
-                indiceSemestre.ano--;
-                nPeriodosCopia--;
-                break;
-        
-            case 2:
-                indiceSemestre.semestre = 1;
-                nPeriodosCopia--;
-                break;
-        }
-                
-    };
+    indiceSemestre = somaTipo( semestreVigente_, nPeriodos*(-1));
     
     while(  (indiceSemestre.ano != semestreVigente.ano) && \
             (indiceSemestre.semestre != semestreVigente.semestre)){
@@ -48,7 +30,7 @@ tipoErros GestorAcademico :: setDesempenhoDisciplinas(unsigned short nPeriodos){
                 for(indice_ = 0; indice_ < desempenhoDisciplinas.size(); indice_++){
                     if( desempenhoDisciplinas[indice_].nome_disciplina == vetorDisciplinas[indice].nomeDisciplina){
                         desempenhoDisciplinas[indice_].media_movel += vetorDisciplinas[indice].getMediaTurma();   
-                        desempenhoDisciplinas[indice_].n_periodos = nPeriodos; 
+                        desempenhoDisciplinas[indice_].n_periodo = nPeriodos; 
                         __NOT_FOUND__ = 1;    
                     };    
                 }
@@ -57,28 +39,19 @@ tipoErros GestorAcademico :: setDesempenhoDisciplinas(unsigned short nPeriodos){
                     tipoDesempenhoDisciplina elemento;
                     elemento.nome_disciplina = vetorDisciplinas[indice].nomeDisciplina;
                     elemento.media_movel = vetorDisciplinas[indice].getMediaTurma();
-                    elemento.n_periodos = 0; //valor eh alterado posteriormante nesta implementacao
+                    elemento.n_periodo = 0; //valor eh alterado posteriormante nesta implementacao
                     desempenhoDisciplinas.push_back(elemento);
                     __NOT_FOUND__ = 0;
                 };
             }
 
-            switch(indiceSemestre.semestre){
-                case 1:
-                    indiceSemestre.semestre = 2;
-                    break;
-        
-                case 2:
-                    indiceSemestre.semestre = 1;
-                    indiceSemestre.ano++;
-                    break;
-            }
+            indiceSemestre = somaTipo( indiceSemestre, 1);
         };
     };
 
     for(indice_ = 0; indice_ < desempenhoDisciplinas.size(); indice_++){
         desempenhoDisciplinas[indice_].media_movel *= (1/nPeriodos);
-        desempenhoDisciplinas[indice_].n_periodos = nPeriodos;
+        desempenhoDisciplinas[indice_].n_periodo = nPeriodos;
     };
 
     
@@ -90,7 +63,7 @@ void GestorAcademico :: evolucaoNotasFinais(){
                     indice;
     
     nPeriodos = getNumero(desabilitado, 3, 7);
-    ExibirMensagemErro ( setDesempenhoDisciplinas(nPeriodos));
+    ExibirMensagemErro ( setDesempenhoDisciplinas(nPeriodos, semestreVigente));
     
     ExibirMensagem("A seguir estao dispostas as disciplinas e suas respectivas medias moveis calculadas a partir de",\
     nPeriodos, ".");
@@ -101,11 +74,61 @@ void GestorAcademico :: evolucaoNotasFinais(){
 };
 
 void GestorAcademico :: agruparDisciplinasAdm(){
+    vector<tipoDesempenhoDisciplina> desempenhoDisciplinasPeriodoAnterior;
+    unsigned short  nPeriodos,
+                    __NOT_FOUND__;
+
+    ExibirMensagem();
+    nPeriodos = getNumero(desabilitado, 3, 7);
+    setDesempenhoDisciplinas(nPeriodos, somaTipo(semestreVigente, -1));
+    desempenhoDisciplinasPeriodoAnterior = desempenhoDisciplinas;
+    setDesempenhoDisciplinas(nPeriodos, semestreVigente);
+
+    if(desempenhoDisciplinas.size() != desempenhoDisciplinasPeriodoAnterior.size()){
+        ExibirMensagem();
+    };
+
+    for(    short indice = 0; indice < desempenhoDisciplinas.size(); indice++){
+        for (short indice_ = 0; indice_ < desempenhoDisciplinasPeriodoAnterior.size(); indice_++){
+            if(desempenhoDisciplinas[indice].nome_disciplina == desempenhoDisciplinasPeriodoAnterior[indice_].nome_disciplina){
+                
+                __NOT_FOUND__ = 1;
+
+                for(int indice__ = 0; indice__ < vetorStatusDisciplinas.size(); indice__++){
+                    if(vetorStatusDisciplinas[indice__].nome_disciplina == desempenhoDisciplinas[indice].nome_disciplina){
+                        
+                        vetorStatusDisciplinas[indice__].diferenca_percentual = \
+                        (((desempenhoDisciplinasPeriodoAnterior[indice_].media_movel - desempenhoDisciplinas[indice].media_movel)*100)/\
+                        desempenhoDisciplinas[indice].media_movel);
+
+                        vetorStatusDisciplinas[indice__].semestre = semestreVigente;
+                        
+                        __NOT_FOUND__ = 0;
+                    };
+                };
+                
+                if(__NOT_FOUND__ == 1){
+                    
+                    tipoStatusDisciplinas elemento;
+
+                    elemento.nome_disciplina = desempenhoDisciplinas[indice].nome_disciplina;
+                    
+                    elemento.diferenca_percentual = (((desempenhoDisciplinasPeriodoAnterior[indice_].media_movel - desempenhoDisciplinas[indice].media_movel)*100)/desempenhoDisciplinas[indice].media_movel);
+                    
+                    elemento.semestre = semestreVigente;
+
+                    vetorStatusDisciplinas.push_back(elemento);
+                };
+            };
+        };
+    };
+
+    //implentar prints
 
 };
 
 void GestorAcademico :: agruparDisciplinasAlunos(){
-
+    
 };
 
 void GestorAcademico :: exibirDisciplinaMaiorMedia(){
