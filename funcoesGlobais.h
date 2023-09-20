@@ -23,6 +23,6 @@ void ExibirMensagem(tipoGenerico... argumento)
     ((cout << argumento << " "), ...);
     cout << endl;
 };
-
+tipoSemestre somaTipo(tipoSemestre, int);
 
 #endif  
