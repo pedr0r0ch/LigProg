@@ -14,7 +14,7 @@ class GestorAcademico{
         GestorAcademico(tipoSemestre, vector<Disciplina>, vector<Aluno>);
         //construtor
 
-        tipoErros setDesempenhoDisciplinas(unsigned short); //calcula as medias moveis das disciplinas\
+        tipoErros setDesempenhoDisciplinas(unsigned short, tipoSemestre); //calcula as medias moveis das disciplinas\
         e guarda em um vetor com elementos do tipo estrutura tipoDesempenhoDisciplina que guarda a media movel,\
         o nome da disciplina e a quantidade de periodos utilizados para fazer a media movel
 
@@ -44,6 +44,7 @@ class GestorAcademico{
 
         tipoSemestre semestreVigente;
         
+        vector <tipoStatusDisciplinas>        vetorStatusDisciplinas;
         vector <tipoDesempenhoDisciplina> desempenhoDisciplinas; 
         vector <Disciplina>               vetorDisciplinas;
         vector <Aluno>                    vetorAlunos;

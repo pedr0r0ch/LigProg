@@ -22,14 +22,22 @@ typedef struct{
 typedef struct{
     string nome_disciplina;
     float media_movel;
-    unsigned short n_periodos;
+    float media_movel_periodo_anterior;
+    unsigned short n_periodo;
 } tipoDesempenhoDisciplina;
+
+typedef struct{
+    string nome_disciplina;
+    float diferenca_percentual;
+    tipoSemestre semestre;
+}tipoStatusDisciplinas;
 
 typedef enum{
     sucesso=0,
     tamanhosDiferentes, //Erro indica que os tamnhos dos vetores de notas e disciplinas nao sao compativeis,\
     ou seja, alguma disciplina esta sem nota ou alguma nota esta sem disciplina.
-    disciplinaNaoConsta //uma disciplina que estava sendo procurada nao consta no sitema.
+    disciplinaNaoConsta, //uma disciplina que estava sendo procurada nao consta no sitema.
+    anoNaoConsta
 }tipoErros;
 
 typedef enum {
