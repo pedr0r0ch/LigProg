@@ -3,7 +3,7 @@ CC = g++
 CFLAGS = -Wall
 
 # Nome do executável
-TARGET = primeiro_entregavel
+TARGET = primeiro_entregavel_pedro
 
 # Lista de arquivos-fonte
 CPP = classeAlunos.cpp\

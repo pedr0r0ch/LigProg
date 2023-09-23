@@ -1,23 +1,26 @@
 #include "classeDisciplina.h"
 
-Disciplina :: Disciplina( string nome, tipoSemestre semestreConstrutor,\
-                          vector<Aluno> vetorAlunos){
+Disciplina :: Disciplina( string nome, tipoSemestre semestreConstrutor){
     nomeDisciplina = nome;
     semestre = semestreConstrutor;
-    alunosCursantes = vetorAlunos;
-    setMediaTurma();
 };
 
 void Disciplina :: setMediaTurma(){
     
-    unsigned short indice,
-                   soma;
+    unsigned short  indice,
+                    contador = 0;
+    float soma = 0;
 
-    for(indice = 0; indice < alunosCursantes.size(); indice++)
-        soma =+ alunosCursantes[indice].getGrauObtido(nomeDisciplina);
+    for(indice = 0; indice < alunosCursantes.size(); indice++){
+        soma += alunosCursantes[indice].getGrauObtido(nomeDisciplina, semestre);
+        contador++;
+    };
     
-    mediaTurma = (soma / (indice + 1));
+    mediaTurma = (soma / contador);
+};
 
+void Disciplina :: inserirAlunos(Aluno aluno){
+    alunosCursantes.push_back(aluno);
 };
 
 float Disciplina :: getMediaTurma(){

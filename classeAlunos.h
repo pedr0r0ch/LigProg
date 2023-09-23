@@ -17,13 +17,13 @@ class Aluno {
         string nomeAluno;
         
         float getMedia();
-        float getGrauObtido(string);
-        //void getDisciplinasCursadas();
+        float getGrauObtido(string, tipoSemestre);
         void setMediaAluno();
-    
+        vector <tipoNota> getGrauDisciplinaPeriodo();
+
     private:
         
-        unsigned int media; //media aritimetica de todas as disciplinas cursadas
+        float media; //media aritimetica de todas as disciplinas cursadas
         vector<tipoNota> grauDisciplinaPeriodo;
         //vetor de uma estrutura que possui informacoes\
         da disciplina, periodo, e grau obtido em um determinado \

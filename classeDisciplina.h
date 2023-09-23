@@ -16,15 +16,14 @@ class Disciplina {
     
     public:
 
-        Disciplina(string, tipoSemestre, vector<Aluno>);
+        Disciplina(string, tipoSemestre);
 
         string nomeDisciplina;
 
         void setMediaTurma();
         float getMediaTurma();
-        //void getAlunosCursantes(); 
-        //void getNotasFinais();
         tipoSemestre getSemestre();
+        void inserirAlunos(Aluno);
     
     private:
 

@@ -4,25 +4,21 @@
 #include <iostream>
 #include "tipos.h"
 
-void ExibirMensagemErro(tipoErros);
-
-template<typename tipoGenerico>
-short getNumero(tipoSinal sinal, tipoGenerico limiteInferior, tipoGenerico limiteSuperior)
-{
- if (sinal = habilitado){
-    short numeroComSinal;
-    return numeroComSinal;
- };
-  unsigned short numeroSemSinal;
- return numeroSemSinal;
-};
-
 template<typename... tipoGenerico>
 void ExibirMensagem(tipoGenerico... argumento)
 {
     ((cout << argumento << " "), ...);
     cout << endl;
 };
+
+void ExibirMensagemErro(tipoErros);
+
+short getMensagem(float , float );
+
+short getMensagem(int , int );
+
+string getMensagem();
+
 tipoSemestre somaTipo(tipoSemestre, int);
 
 #endif  

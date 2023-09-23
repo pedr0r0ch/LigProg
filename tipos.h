@@ -22,7 +22,6 @@ typedef struct{
 typedef struct{
     string nome_disciplina;
     float media_movel;
-    float media_movel_periodo_anterior;
     unsigned short n_periodo;
 } tipoDesempenhoDisciplina;
 
@@ -37,12 +36,14 @@ typedef enum{
     tamanhosDiferentes, //Erro indica que os tamnhos dos vetores de notas e disciplinas nao sao compativeis,\
     ou seja, alguma disciplina esta sem nota ou alguma nota esta sem disciplina.
     disciplinaNaoConsta, //uma disciplina que estava sendo procurada nao consta no sitema.
-    anoNaoConsta
+    anoNaoConsta,
+    periodosInsuficientes
 }tipoErros;
 
 typedef enum {
     desabilitado = 0, //sinal desabilitado (pegar um numero sem sinal)
     habilitado = 1 //sinal habilitadado (pegar um numero com sinal) 
 }tipoSinal;
+
 
 #endif
