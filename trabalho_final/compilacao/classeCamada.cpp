@@ -185,17 +185,27 @@ void Camada :: removerFundo(){
 
     if(opcao == -1)
         return;
-    
-    Py_DECREF(modulo);
-    Py_DECREF(retorno);
-    Py_DECREF(argumento);
-    Py_DECREF(funcao);
 
     if(arquivo_copia != ""){
         copiarConteudo(imagem, arquivo_copia);
         remove(arquivo_copia.c_str());
         return;
     }
+
+    clear();
+    setCor(3);
+    mvprintw(0, 0, "Pressione enter para continuar");
+    setCor(4);
+    mvprintw(2, 0, "Erro inesperado ao concluir operacao, tente novamnete");
+    resetCor();
+    getch();
+
+    Py_DECREF(modulo);
+    Py_DECREF(retorno);
+    Py_DECREF(argumento);
+    Py_DECREF(funcao);
+
+    return;
 
 };
 
@@ -267,17 +277,27 @@ void Camada :: profundidadeCampo(){
             exibirImagem(arquivo_copia);   
 
         if(opcao == 8){
-            
-            Py_DECREF(modulo);
-            Py_DECREF(retorno);
-            Py_DECREF(argumentos);
-            Py_DECREF(funcao);
 
             if(arquivo_copia != ""){
                 copiarConteudo(imagem, arquivo_copia);
                 remove(arquivo_copia.c_str());
                 return;
             }
+
+            clear();
+            setCor(3);
+            mvprintw(0, 0, "Pressione enter para continuar");
+            setCor(4);
+            mvprintw(2, 0, "Erro inesperado ao concluir operacao, tente novamnete");
+            resetCor();
+            getch();
+
+            Py_DECREF(modulo);
+            Py_DECREF(retorno);
+            Py_DECREF(argumentos);
+            Py_DECREF(funcao);
+
+            return;
         }
     };
 
@@ -287,6 +307,7 @@ void Camada :: profundidadeCampo(){
 
 //altera brilho, saturacao e contraste
 void Camada :: menuLuzCor(){
+    curs_set(0);
     
     int opcao_1,
         opcao_2;
@@ -312,6 +333,7 @@ void Camada :: menuLuzCor(){
     
 
     while(1){
+        
         opcao_1 = exibirOpcoes(opcoes_1);
         if(opcao_1 == -1)
             return;
@@ -333,20 +355,24 @@ void Camada :: menuLuzCor(){
             continue;
         
         if(opcao_1 != 3){
+
+            if(arquivo_copia != "")
+                remove(arquivo_copia.c_str());
+
             Py_Initialize(); //inicializa a API
+            
             sys = PyImport_ImportModule("sys");
             path = PyObject_GetAttrString(sys, "path");
             PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
             
-            modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
+            modulo = PyImport_ImportModule("funcoes_classeCamada");
+            
             if (modulo != nullptr) {
 
                 funcao = PyObject_GetAttrString(modulo, ("alterar" + efeitos[opcao_1]).c_str());
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
-                    argumentos = PyTuple_Pack(3,
-                            PyUnicode_DecodeFSDefault(arquivo_copia.c_str()),
-                            PyUnicode_DecodeFSDefault(imagem.c_str()),
+                    argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(imagem.c_str()),
                             PyLong_FromLong(((double)opcao_2 / 7.0) * 2.0));
 
                     retorno = PyObject_CallObject(funcao, argumentos);
@@ -355,25 +381,34 @@ void Camada :: menuLuzCor(){
                         const char* resultado_cstr = PyUnicode_AsUTF8(retorno);
                         arquivo_copia = string(resultado_cstr);
                     }
-
-                    Py_DECREF(retorno);
-                    Py_DECREF(argumentos);
-                    Py_DECREF(funcao);
-                }
-                
-                Py_DECREF(modulo);
+                }         
             }
-
-            Py_Finalize();//finaliza a API
-        
+            Py_Finalize();//finaliza a API  
         }
 
         if(opcao_1 == 3){
+            
             if(arquivo_copia != ""){
                 copiarConteudo(imagem, arquivo_copia);
                 remove(arquivo_copia.c_str());
                 return;
             }
+
+            clear();
+            setCor(3);
+            mvprintw(0, 0, "Pressione enter para continuar");
+            setCor(4);
+            mvprintw(2, 0, "Erro inesperado ao concluir operacao, tente novamnete");
+            resetCor();
+            getch();
+
+            Py_DECREF(modulo);
+            Py_DECREF(retorno);
+            Py_DECREF(argumentos);
+            Py_DECREF(funcao);
+
+            return;
+
         }
 
     }
