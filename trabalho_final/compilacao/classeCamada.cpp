@@ -243,10 +243,8 @@ void Camada :: profundidadeCampo(){
                 funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
-                    argumentos = PyTuple_Pack(3,
-                            PyUnicode_DecodeFSDefault(imagem.c_str()),
-                            PyUnicode_DecodeFSDefault(arquivo_copia.c_str()),
-                            PyLong_FromLong((opcao + 1)*2));
+                    argumentos = PyTuple_Pack(2, 
+                    PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong((opcao + 1)*2));
 
                     retorno = PyObject_CallObject(funcao, argumentos);
                     
