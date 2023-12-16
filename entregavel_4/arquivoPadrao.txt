@@ -1,0 +1,6 @@
+Larissa,20,Futebol
+Jose,20,Futebol
+Alessanda,20,Surf
+Joao ,20,Futebol
+Pedro ,20,Surf
+Pedro,30,Surf

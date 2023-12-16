@@ -1,0 +1,7 @@
+CalculoI,2020.2,7,6
+Algebra,2020.2,7.4,4
+FisicaI,2020.1,5,4
+Sistemas-Operacionais,2023.1,10,5
+Linguagens,2023.2,10,5
+FisicaII,2024.1,7,4
+FisicaIII,2024.2,4,4
