@@ -2,15 +2,11 @@
 #define CLASSE_CAMADA
 
 #include <iostream>
-#include <list>
-#include <utility>
 #include <string>
-#include <fstream>
 #include <ncurses.h>
 
 #include "tipos.h"
 #include "funcoesGlobais.h"
-//#include <opencv2/opencv.hpp>
 
 
 

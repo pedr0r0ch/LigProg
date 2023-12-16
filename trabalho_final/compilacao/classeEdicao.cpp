@@ -300,7 +300,7 @@ string Edicao :: sobreporCamadas(){
 
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
-    PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     pModule = PyImport_ImportModule("funcoes_classeEdicao");
 
     if (pModule != nullptr) {

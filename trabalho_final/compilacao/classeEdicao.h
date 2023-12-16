@@ -5,14 +5,8 @@
 #include <string>
 #include <vector>
 #include <filesystem>
-#include <fstream>
-#include <sstream>
-#include <chrono>
-#include <iomanip>
 #include <ncurses.h>
-#include <unordered_set>
 
-#define DIT_TEMP_EDICAO "/dir_temporario_edicoes"
 
 #include "classeCamada.h"
 #include "funcoesGlobais.h"

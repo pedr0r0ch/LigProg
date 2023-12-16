@@ -1,8 +1,3 @@
-#include <iostream>
-
-#include <ctime>
-#include <sstream>
-
 #include "funcoesGlobais.h"
 
 using namespace std;
@@ -116,7 +111,7 @@ void exibirImagem(string caminhoImagem){
 
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
-    PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
     PyObject* pModule = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
     if (pModule != nullptr) {

@@ -143,7 +143,7 @@ void Camada :: removerFundo(){
     Py_Initialize(); //inicializa a API
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
-    PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
     modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
     if (modulo != nullptr) {
@@ -235,7 +235,7 @@ void Camada :: profundidadeCampo(){
             Py_Initialize(); //inicializa a API
             sys = PyImport_ImportModule("sys");
             path = PyObject_GetAttrString(sys, "path");
-            PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+            PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
             
             modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
             if (modulo != nullptr) {
@@ -338,7 +338,7 @@ void Camada :: menuLuzCor(){
             Py_Initialize(); //inicializa a API
             sys = PyImport_ImportModule("sys");
             path = PyObject_GetAttrString(sys, "path");
-            PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+            PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
             
             modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
             if (modulo != nullptr) {
@@ -393,7 +393,7 @@ void Camada :: copiarConteudo(string receptor, string doador){
     Py_Initialize(); //inicializa a API
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
-    PyList_Append(path, PyUnicode_DecodeFSDefault("/home/pedro/EEL670/trabalho_final/compilacao"));
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
     modulo = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
     if (modulo != nullptr) {

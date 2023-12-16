@@ -2,6 +2,7 @@
 #define _FUNCOES_GLOBAIS_
 
 #include "/usr/include/python3.10/Python.h"
+
 #include <iostream>
 #include <ncurses.h>
 #include <vector>
