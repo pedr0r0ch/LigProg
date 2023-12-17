@@ -358,7 +358,7 @@ void Camada :: menuLuzCor(){
 
                 setCor(1);
                 mvprintw(3, 0, "Nivel padrao de %s: 50%%", efeitos[opcao_1].c_str());
-                mvprintw(4, 0, "Ajustar %s para %f%%", efeitos[opcao_1].c_str(), (intensidade * 50.0));
+                mvprintw(4, 0, "Ajustar %s para %.0f%%", efeitos[opcao_1].c_str(), (intensidade * 50.0));
 
                 tecla = getch();
 
@@ -385,6 +385,10 @@ void Camada :: menuLuzCor(){
                 }
             }  
 
+            clear();
+            setCor(5);
+
+            mvprintw(0,0, "instensidade: %f", intensidade);
 
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
@@ -408,8 +412,8 @@ void Camada :: menuLuzCor(){
                 PyObject  *funcao = PyObject_GetAttrString(modulo, ("alterar" + efeitos[opcao_1]).c_str());
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
-                    PyObject  *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
-                            PyLong_FromLong(intensidade));
+                    PyObject *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
+                                   PyFloat_FromDouble(intensidade));
 
                     PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
 
