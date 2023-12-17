@@ -57,6 +57,7 @@ void Edicao :: addCamada(){
     
     setCor(1);
     mvprintw(15, 0, "%s", nomeArquivo.c_str());
+    getch();
     
 
     remove(("../dir_trabalho/" + arquivos[opcao+1]).c_str());
