@@ -17,9 +17,9 @@ def manterObjeto(imagemOriginal):
     
     objeto = remove(imagem) 
 
-    objeto.save(imagemCopia) 
+    objeto.save(imagemCopia, "PNG") 
 
-    
+
     return imagemCopia
 
 def efeitoDesfoque(imagemOriginal, intensidade):
@@ -28,8 +28,7 @@ def efeitoDesfoque(imagemOriginal, intensidade):
     imagem = Image.open(imagemOriginal)
     imagem = imagem.filter(ImageFilter.GaussianBlur(intensidade))
 
-    imagem.save(imagemCopia)
-
+    imagem.save(imagemCopia, "PNG")
     return imagemCopia
 
 def alterarContraste(imagemOriginal, intensidade):
@@ -40,7 +39,7 @@ def alterarContraste(imagemOriginal, intensidade):
     enhancer = ImageEnhance.Contrast(imagem)
     imagem_com_saturacao = enhancer.enhance(intensidade)
     
-    imagem_com_saturacao.save(imagemCopia)
+    imagem_com_saturacao.save(imagemCopia, "PNG")
 
     return imagemCopia  
 
@@ -52,7 +51,7 @@ def alterarBrilho(imagemOriginal, intensidade):
     enhancer = ImageEnhance.Brightness(imagem)
     imagem_com_brilho = enhancer.enhance(intensidade)
     
-    imagem_com_brilho.save(imagemCopia)
+    imagem_com_brilho.save(imagemCopia, "PNG")
 
     return imagemCopia
 
@@ -64,11 +63,15 @@ def alterarSaturacao(imagemOriginal, intensidade):
     enhancer = ImageEnhance.Color(imagem)
     imagem_com_saturacao = enhancer.enhance(intensidade)
     
-    imagem_com_saturacao.save(imagemCopia)
+    imagem_com_saturacao.save(imagemCopia, "PNG")
 
     return imagemCopia
 
 def fazerCopiaNome(caminho_arquivo):
-    caminho = os.path.split(caminho_arquivo)
-    novo_caminho = (caminho[0] + "/" + "copia_" + caminho[1])
+    nome_base, extensao_atual = os.path.splitext(os.path.basename(caminho_arquivo))
+
+    novo_nome = "copia_" + nome_base + ".png"
+
+    novo_caminho = os.path.join(os.path.dirname(caminho_arquivo), novo_nome)
+
     return novo_caminho

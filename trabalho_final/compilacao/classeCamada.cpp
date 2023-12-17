@@ -154,7 +154,7 @@ void Camada :: removerFundo(){
             }
 
             setCor(2);
-            mvprintw(15, 0, "funcao Executada sem erro");
+            mvprintw(15, 0, "funcao Executada sem erro, nome do arquivo: %s", arquivo_copia);
             getch();
 
             Py_DECREF(retorno);
@@ -162,6 +162,7 @@ void Camada :: removerFundo(){
         }
         Py_DECREF(funcao);                
     }
+
     Py_DECREF(sys);
     Py_DECREF(path);
     Py_DECREF(modulo);
