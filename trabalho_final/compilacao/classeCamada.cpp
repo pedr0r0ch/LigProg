@@ -363,17 +363,17 @@ void Camada :: menuLuzCor(){
                 tecla = getch();
 
                 if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-                    if(intensidade == 0){
-                        intensidade = 2;
+                    if(intensidade == 0.0){
+                        intensidade = 2.0;
                         continue;
                     }
                     intensidade = intensidade - 0.1;
                     continue;
                 }
 
-                if(tecla == 'W' || tecla == 'w' || tecla == KEY_DOWN){
-                    if(intensidade == 2){
-                        intensidade = 0;
+                if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
+                    if(intensidade == 2.0){
+                        intensidade = 0.0;
                         continue;
                     }
                     intensidade = intensidade + 0.1;
