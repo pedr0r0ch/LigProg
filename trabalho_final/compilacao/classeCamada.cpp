@@ -294,7 +294,7 @@ void Camada :: menuLuzCor(){
                                 "Salvar alteracoes e sair"};
     vector<string> opcoes_2;
 
-    vector<string> opcoes_3; {"voltar e descartar alteracoes", "Salvar e voltar para o menu de edicoes gerais"};
+    vector<string> opcoes_3 = {"voltar e descartar alteracoes", "Salvar e voltar para o menu de edicoes gerais"};
 
     
 
