@@ -282,6 +282,7 @@ void Edicao :: exibirEdicao(){
 
 //converte um arquivo de imagem qualquer para um .png
 string Edicao :: converterArquivo(string nomeArquivo){
+    
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -301,7 +302,17 @@ string Edicao :: converterArquivo(string nomeArquivo){
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
-                    nomeArquivo = string(PyUnicode_AsUTF8(retorno));
+                    
+                    Py_DECREF(pArgs);
+                    Py_DECREF(retorno);
+                    Py_DECREF(pFunction);
+                    Py_DECREF(pModule);
+
+                    setCor(1);
+                    mvprintw(15, 0, "Retornando");
+                    getch();
+
+                    return string(PyUnicode_AsUTF8(retorno));
                 }
                 
                 Py_DECREF(pArgs);
