@@ -1,4 +1,6 @@
+#include <unistd.h>
 #include "funcoesGlobais.h"
+
 
 using namespace std;
 
@@ -95,6 +97,11 @@ int exibirOpcoes(vector<string>& opcoes){ //funcao que exibe o menu interativo
 void exibirImagem(string caminhoImagem){
     // exibe a imagem com as alteracoes mais recentes
 
+    noecho();
+    curs_set(0);
+    setCor(2);
+    mvprintw(0, 0, "!! Aguarde ate que a imagem seja exibida.");
+    resetCor();
 
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
@@ -120,6 +127,8 @@ void exibirImagem(string caminhoImagem){
         Py_DECREF(pModule);
     }
 
+    getch();
+    clear();
     
 };
 

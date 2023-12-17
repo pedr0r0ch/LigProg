@@ -166,7 +166,8 @@ void Camada :: removerFundo(){
     if(arquivo_copia != "")
             exibirImagem(arquivo_copia);   
 
-    opcao = exibirOpcoes(opcoes);
+    //opcao = exibirOpcoes(opcoes);
+    opcao = 0;
 
     if(opcao == -1)
         return;
@@ -278,7 +279,8 @@ void Camada :: menuLuzCor(){
     int opcao_1,
         opcao_2;
 
-    string arquivo_copia = "";
+    string  arquivo_copia = "",
+            arquivo_base = imagem;
 
     vector<string> efeitos = {"Contraste", "Brilho", "Saturacao"};
 
@@ -332,13 +334,14 @@ void Camada :: menuLuzCor(){
                 PyObject  *funcao = PyObject_GetAttrString(modulo, ("alterar" + efeitos[opcao_1]).c_str());
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
-                    PyObject  *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(imagem.c_str()),
+                    PyObject  *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
                             PyLong_FromLong(((double)opcao_2 / 7.0) * 2.0));
 
                     PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
 
                     if((retorno != NULL) && (PyUnicode_Check(retorno))){
                         arquivo_copia = string(PyUnicode_AsUTF8(retorno));
+                        arquivo_base = arquivo_copia; 
                     }
 
                     Py_DECREF(retorno);
@@ -354,14 +357,14 @@ void Camada :: menuLuzCor(){
             //finaliza a API  
             
             if(arquivo_copia != "")
-                exibirImagem(arquivo_copia);
+                exibirImagem(arquivo_base);
 
             continue;
         }
 
 
         if(arquivo_copia != ""){
-            copiarConteudo(imagem, arquivo_copia);
+            copiarConteudo(imagem, arquivo_base);
             remove(arquivo_copia.c_str());
             return;
         }
