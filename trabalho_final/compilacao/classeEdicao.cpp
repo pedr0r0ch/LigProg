@@ -54,6 +54,9 @@ void Edicao :: addCamada(){
         descricao = "Descricao nao fornecida.";
 
     nomeArquivo = converterArquivo(("../dir_trabalho/" + arquivos[opcao+1]));
+    
+    remove(("../dir_trabalho/" + arquivos[opcao+1]).c_str());
+
     Camada* camada_ptr = new Camada(nomeArquivo, descricao);
     
     (*camada_ptr).exibirCamada();

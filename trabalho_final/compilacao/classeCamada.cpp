@@ -303,8 +303,11 @@ void Camada :: profundidadeCampo(){
 void Camada :: menuLuzCor(){
     curs_set(0);
     
-    int opcao_1,
-        opcao_2;
+    int opcao_1;
+
+    double intensidade = 1.0;
+    
+    char tecla;
 
     string  arquivo_copia = "",
             arquivo_base = imagem;
@@ -329,7 +332,7 @@ void Camada :: menuLuzCor(){
             return;
         
         if(opcao_1 != 3){
-        
+        /*
             opcoes_2 = { "Voltar",
                         "Diminuir " + efeitos[opcao_1] + " para o nivel 0",
                         "Diminuir " + efeitos[opcao_1] + " para o nivel 1",
@@ -342,10 +345,46 @@ void Camada :: menuLuzCor(){
                         "Almentar " + efeitos[opcao_1] + " para o nivel 8"}; 
 
             opcao_2 = exibirOpcoes(opcoes_2);
-            
-            if(opcao_2 == -1)
-                continue;
-            
+        */
+
+            while(1){
+                clear();
+                refresh();
+
+                setCor(4);
+                mvprintw(0, 1, "! Use as teclas W, S e 'enter' para alternar");
+                mvprintw(1, 1, "entre os niveis de %s e selecionar - las", efeitos[opcao_1].c_str());
+                resetCor();
+
+                setCor(1);
+                mvprintw(3, 0, "Nivel padrao de %s: 50%%", efeitos[opcao_1].c_str());
+                mvprintw(4, 0, "Ajustar %s para %f%%", efeitos[opcao_1].c_str(), (intensidade * 50.0));
+
+                tecla = getch();
+
+                if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
+                    if(intensidade == 0){
+                        intensidade = 2;
+                        continue;
+                    }
+                    intensidade = intensidade - 0.1;
+                    continue;
+                }
+
+                if(tecla == 'W' || tecla == 'w' || tecla == KEY_DOWN){
+                    if(intensidade == 2){
+                        intensidade = 0;
+                        continue;
+                    }
+                    intensidade = intensidade + 0.1;
+                    continue;
+                }
+
+                if(tecla == 10 || tecla == 13){
+                    break;
+                }
+            }  
+
 
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
@@ -370,7 +409,7 @@ void Camada :: menuLuzCor(){
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
                     PyObject  *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
-                            PyLong_FromLong(((double)opcao_2 / 8.0) * 2.0));
+                            PyLong_FromLong(intensidade));
 
                     PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
 

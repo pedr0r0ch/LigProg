@@ -12,7 +12,7 @@ def exibirArquivoImagem(nomeArquivo):
         return 0
     
 def converterArquivo(arquivo):
-    if arquivo.lower().endswith(".png"):
+    if(arquivo.lower().endswith(".png")):
         return arquivo
 
     imagem = Image.open(arquivo)
