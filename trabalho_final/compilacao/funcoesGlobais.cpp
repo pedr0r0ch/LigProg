@@ -94,19 +94,7 @@ int exibirOpcoes(vector<string>& opcoes){ //funcao que exibe o menu interativo
 
 void exibirImagem(string caminhoImagem){
     // exibe a imagem com as alteracoes mais recentes
-
-    setCor(4);
-    clear();
-    curs_set(0);
-    noecho();
-    mvprintw(0, 0, "! Por favor digite enter prosseguir e para que a imagem seja exibida.");
-    resetCor();
-
-    getch();
-
-    curs_set(1);
-    echo();
-
+    
     Py_Initialize(); //inicializa a API
 
     PyObject* sys = PyImport_ImportModule("sys");
