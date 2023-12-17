@@ -286,7 +286,8 @@ string Edicao :: converterArquivo(string nomeArquivo){
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
-    PyObject* pModule = PyImport_ImportModule("funcoes_funcoesGlobais");
+    
+    PyObject* pModule = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
 
     if (pModule != nullptr) {
 
@@ -297,13 +298,13 @@ string Edicao :: converterArquivo(string nomeArquivo){
             for(unsigned int indice = 1; indice < camadas.size(); indice++){
 
                 
-                PyObject* pArgs = PyTuple_Pack(1, PyUnicode_DecodeFSDefault(nomeArquivo.c_str()));
+                PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
                 
-                PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
+                PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     
-                    Py_DECREF(pArgs);
+                    Py_DECREF(pArg);
                     Py_DECREF(retorno);
                     Py_DECREF(pFunction);
                     Py_DECREF(pModule);
@@ -315,7 +316,7 @@ string Edicao :: converterArquivo(string nomeArquivo){
                     return string(PyUnicode_AsUTF8(retorno));
                 }
                 
-                Py_DECREF(pArgs);
+                Py_DECREF(pArg);
                 Py_DECREF(retorno);
 
             };
