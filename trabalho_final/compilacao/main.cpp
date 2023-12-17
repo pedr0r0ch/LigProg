@@ -60,7 +60,6 @@ main(int argc, char**)
 
             case 0:
                 edicao.addCamada();
-                getch();
                 break;
             
             case 1:

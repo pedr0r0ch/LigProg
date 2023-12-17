@@ -1,4 +1,5 @@
 #funcoes que as funcoes globais utilizam
+import os
 from PIL import Image
 
 def exibirArquivoImagem(nomeArquivo):
@@ -11,5 +12,11 @@ def exibirArquivoImagem(nomeArquivo):
         return 0
     
 def copiarArquivoImagem(receptor, doador):
+
+    nome_base, extensao_atual = os.path.splitext(os.path.basename(receptor))
+    
+    novo_caminho = os.path.join(os.path.dirname(receptor), (nome_base + ".png"))
+
     img = Image.open(doador)
-    img.save(receptor)
+
+    img.save(novo_caminho, "PNG")

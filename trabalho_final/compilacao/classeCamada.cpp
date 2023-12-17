@@ -178,7 +178,7 @@ void Camada :: removerFundo(){
         return;
 
     if(arquivo_copia != ""){
-        copiarConteudo(imagem, arquivo_copia);
+        copiarConteudo(&imagem, arquivo_copia);
         remove(arquivo_copia.c_str());
         return;
     }
@@ -258,7 +258,7 @@ void Camada :: profundidadeCampo(){
         }
 
         if(arquivo_copia != ""){
-            copiarConteudo(imagem, arquivo_copia);
+            copiarConteudo(&imagem, arquivo_copia);
             remove(arquivo_copia.c_str());
             return;
         }
@@ -369,7 +369,7 @@ void Camada :: menuLuzCor(){
 
 
         if(arquivo_copia != ""){
-            copiarConteudo(imagem, arquivo_base);
+            copiarConteudo(&imagem, arquivo_base);
             remove(arquivo_copia.c_str());
             return;
         }
@@ -387,7 +387,7 @@ void Camada :: menuLuzCor(){
 };
 
 //copia o conteudo de arquivo 1 para o arquivo 2
-void Camada :: copiarConteudo(string &receptor, string doador){
+void Camada :: copiarConteudo(string *receptor, string doador){
     
     PyObject  *sys,
               *path,
@@ -408,13 +408,13 @@ void Camada :: copiarConteudo(string &receptor, string doador){
         if (funcao != nullptr && PyCallable_Check(funcao)) {
             
             argumentos = PyTuple_Pack(2,
-                    PyUnicode_DecodeFSDefault(receptor.c_str()),
+                    PyUnicode_DecodeFSDefault((*receptor).c_str()),
                     PyUnicode_DecodeFSDefault(doador.c_str()));
 
             retorno = PyObject_CallObject(funcao, argumentos);
             
             if(retorno != NULL)
-                receptor = string(PyUnicode_AsUTF8(retorno));
+                (*receptor) = string(PyUnicode_AsUTF8(retorno));
 
             Py_DECREF(argumentos);
             Py_DECREF(funcao);
