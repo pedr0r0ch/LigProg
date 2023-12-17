@@ -26,11 +26,10 @@ class Camada{
 
     private:
 
-        void manterFundo();
         void removerFundo();
         void profundidadeCampo();
         void menuLuzCor();
-        void copiarConteudo(string, string);
+        void copiarConteudo(string&, string);
 
         int transparencia;
         string imagem;

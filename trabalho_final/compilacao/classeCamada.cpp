@@ -387,13 +387,14 @@ void Camada :: menuLuzCor(){
 };
 
 //copia o conteudo de arquivo 1 para o arquivo 2
-void Camada :: copiarConteudo(string receptor, string doador){
+void Camada :: copiarConteudo(string &receptor, string doador){
     
     PyObject  *sys,
               *path,
               *modulo,
               *funcao,
-              *argumentos;
+              *argumentos,
+              *retorno;
     
     
     sys = PyImport_ImportModule("sys");
@@ -410,7 +411,10 @@ void Camada :: copiarConteudo(string receptor, string doador){
                     PyUnicode_DecodeFSDefault(receptor.c_str()),
                     PyUnicode_DecodeFSDefault(doador.c_str()));
 
-            PyObject_CallObject(funcao, argumentos);
+            retorno = PyObject_CallObject(funcao, argumentos);
+            
+            if(retorno != NULL)
+                receptor = string(PyUnicode_AsUTF8(retorno));
 
             Py_DECREF(argumentos);
             Py_DECREF(funcao);
