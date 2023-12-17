@@ -16,10 +16,10 @@ def manterObjeto(imagemOriginal):
     imagem = Image.open(imagemOriginal) 
     
     objeto = remove(imagem) 
-    objeto.show()
-    
+
     objeto.save(imagemCopia) 
 
+    
     return imagemCopia
 
 def efeitoDesfoque(imagemOriginal, intensidade):

@@ -100,6 +100,7 @@ void exibirImagem(string caminhoImagem){
     noecho();
     curs_set(0);
     setCor(2);
+    clear();
     mvprintw(0, 0, "!! Aguarde ate que a imagem seja exibida.");
     resetCor();
 
