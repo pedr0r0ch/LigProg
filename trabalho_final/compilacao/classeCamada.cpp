@@ -130,6 +130,8 @@ string Camada :: getArquivo(){
 //remove o plano de fundo, restando apenas a imagem
 void Camada :: removerFundo(){
     
+    vector<string> opcoes =  { "Descartar alteracao e voltar",
+                               "Salvar alteraco"};
     string arquivo_copia = "";
     int opcao;
         
@@ -164,8 +166,6 @@ void Camada :: removerFundo(){
     if(arquivo_copia != "")
             exibirImagem(arquivo_copia);   
 
-    vector<string> opcoes =  { "Descartar alteracao e voltar",
-                               "Salvar alteraco"};
     opcao = exibirOpcoes(opcoes);
 
     if(opcao == -1)
@@ -245,11 +245,10 @@ void Camada :: profundidadeCampo(){
             Py_DECREF(path);
             Py_DECREF(modulo);
 
-            
-            continue;
-
             if(arquivo_copia != "")
                 exibirImagem(arquivo_copia);
+
+            continue;
         }
 
         if(arquivo_copia != ""){
@@ -354,10 +353,13 @@ void Camada :: menuLuzCor(){
             
             //finaliza a API  
             
+            if(arquivo_copia != "")
+                exibirImagem(arquivo_copia);
+
             continue;
         }
 
-            
+
         if(arquivo_copia != ""){
             copiarConteudo(imagem, arquivo_copia);
             remove(arquivo_copia.c_str());
