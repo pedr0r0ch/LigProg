@@ -39,6 +39,7 @@ main(int argc, char**)
         init_pair(2, COLOR_RED, COLOR_WHITE);  //opcoes de voltar selecionadas
         init_pair(3, COLOR_GREEN, COLOR_WHITE);//opcoes de avancar selecionadas
         init_pair(4, COLOR_YELLOW, COLOR_BLACK); //orientacoes de uso
+        init_pair(5, COLOR_RED, COLOR_BLACK);
     }
 
     Edicao edicao;

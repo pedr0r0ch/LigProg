@@ -86,6 +86,7 @@ void Camada :: edicoesGerais(){
 
     vector<string> menu = {
         "Voltar e cancelar operacao",
+        "Definir transparencia da camada",
         "Recortar objeto e remover fundo",
         "Aplicar efeito de profundidade de campo",
         "Abrir menu de opcoes de cor e luz",
@@ -99,12 +100,18 @@ void Camada :: edicoesGerais(){
 
     switch(opcao){
         case 0:
+            setTransparencia();
+            break;
+
+        case 1:
             removerFundo();
             break;
-        case 1:
+        
+        case 2:
             profundidadeCampo();
             break;
-        case 2:
+        
+        case 3:
             menuLuzCor();
             break;
     }
@@ -135,6 +142,15 @@ void Camada :: removerFundo(){
     string arquivo_copia = "";
     int opcao;
         
+    
+    clear();
+    curs_set(0);
+    noecho();
+
+    setCor(5);
+    mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
+    resetCor();
+
     PyObject  *sys = PyImport_ImportModule("sys");
     PyObject  *path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -168,8 +184,7 @@ void Camada :: removerFundo(){
     if(arquivo_copia != "")
             exibirImagem(arquivo_copia);   
 
-    //opcao = exibirOpcoes(opcoes);
-    opcao = 0;
+    opcao = exibirOpcoes(opcoes);
 
     if(opcao == -1)
         return;
@@ -182,11 +197,12 @@ void Camada :: removerFundo(){
     }
 
     clear();
-    setCor(3);
-    mvprintw(0, 0, "Pressione enter para continuar");
     setCor(4);
-    mvprintw(2, 0, "Arquivo nao salvo, nenhuma alteracao feita");
+    mvprintw(0, 0, "Pressione enter para continuar");
+    setCor(1);
+    mvprintw(2, 0, "Arquivo nao salvo");
     resetCor();
+    
     getch();
     return;
 
@@ -217,7 +233,14 @@ void Camada :: profundidadeCampo(){
 
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
+            
+            clear();
+            curs_set(0);
+            noecho();
 
+            setCor(5);
+            mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
+            resetCor();
             
             PyObject  *sys = PyImport_ImportModule("sys");
             PyObject  *path = PyObject_GetAttrString(sys, "path");
@@ -262,11 +285,12 @@ void Camada :: profundidadeCampo(){
         }
 
         clear();
-        setCor(3);
-        mvprintw(0, 0, "Pressione enter para continuar");
         setCor(4);
-        mvprintw(2, 0, "Arquivo nao salvo, nenhuma alteracao feita");
+        mvprintw(0, 0, "Pressione enter para continuar");
+        setCor(1);
+        mvprintw(2, 0, "Arquivo nao salvo");
         resetCor();
+
         getch();
         return;
     };
@@ -326,7 +350,13 @@ void Camada :: menuLuzCor(){
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
 
-            
+            clear();
+            curs_set(0);
+            noecho();
+
+            setCor(5);
+            mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
+            resetCor();
             
             PyObject  *sys = PyImport_ImportModule("sys");
             PyObject  *path = PyObject_GetAttrString(sys, "path");
@@ -340,7 +370,7 @@ void Camada :: menuLuzCor(){
                 if (funcao != nullptr && PyCallable_Check(funcao)) {
                     
                     PyObject  *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
-                            PyLong_FromLong(((double)opcao_2 / 7.0) * 2.0));
+                            PyLong_FromLong(((double)opcao_2 / 8.0) * 2.0));
 
                     PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
 
@@ -374,11 +404,12 @@ void Camada :: menuLuzCor(){
             }
 
         clear();
-        setCor(3);
-        mvprintw(0, 0, "Pressione enter para continuar");
         setCor(4);
-        mvprintw(2, 0, "Arquivo nao salvo, nenhuma alteracao feita");
+        mvprintw(0, 0, "Pressione enter para continuar");
+        setCor(1);
+        mvprintw(2, 0, "Arquivo nao salvo");
         resetCor();
+
         getch();        
         return;
 
