@@ -20,3 +20,5 @@ def copiarArquivoImagem(receptor, doador):
     img = Image.open(doador)
 
     img.save(novo_caminho, "PNG")
+
+    return novo_caminho

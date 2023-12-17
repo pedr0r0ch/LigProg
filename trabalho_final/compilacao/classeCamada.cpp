@@ -153,9 +153,6 @@ void Camada :: removerFundo(){
                 arquivo_copia = string(PyUnicode_AsUTF8(retorno));
             }
 
-            setCor(2);
-            mvprintw(15, 0, "funcao Executada sem erro, nome do arquivo: %s", arquivo_copia);
-            getch();
 
             Py_DECREF(retorno);
             Py_DECREF(argumento);
@@ -178,6 +175,7 @@ void Camada :: removerFundo(){
         return;
 
     if(arquivo_copia != ""){
+        remove(imagem.c_str());
         copiarConteudo(&imagem, arquivo_copia);
         remove(arquivo_copia.c_str());
         return;
