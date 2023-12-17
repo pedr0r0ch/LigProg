@@ -320,8 +320,7 @@ string Edicao :: sobreporCamadas(){
                 *path,
                 *pModule,
                 *pFunction,
-                *pArgs,
-                *result;
+                *pArgs;
     
 
     imagemFundo = (*camadas[0]).getArquivo(); 
