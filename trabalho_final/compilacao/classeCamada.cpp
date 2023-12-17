@@ -213,7 +213,7 @@ void Camada :: profundidadeCampo(){
         if(opcao == -1)
             return;
 
-        if(opcao != 8){
+        if(opcao != 7){
 
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
@@ -294,6 +294,8 @@ void Camada :: menuLuzCor(){
                                 "Salvar alteracoes e sair"};
     vector<string> opcoes_2;
 
+    vector<string> opcoes_3; {"voltar e descartar alteracoes", "Salvar e voltar para o menu de edicoes gerais"}
+
     
 
     while(1){
@@ -361,16 +363,15 @@ void Camada :: menuLuzCor(){
             
             if(arquivo_copia != "")
                 exibirImagem(arquivo_base);
-
-            continue;
         }
 
-
-        if(arquivo_copia != ""){
-            copiarConteudo(&imagem, arquivo_base);
-            remove(arquivo_copia.c_str());
-            return;
-        }
+        opcao_1 = exibirOpcoes(opcoes_3);
+        if(opcao_1 == 0)
+            if(arquivo_copia != ""){
+                copiarConteudo(&imagem, arquivo_base);
+                remove(arquivo_copia.c_str());
+                return;
+            }
 
         clear();
         setCor(3);
