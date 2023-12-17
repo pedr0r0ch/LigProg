@@ -39,10 +39,13 @@ void Edicao :: addCamada(){
 
     setCor(4); noecho();
     mvprintw(0,0,"Descreva a imagem selecionada (%s) em uma unica frase ou palavra.", arquivos[opcao+1].c_str());
-    echo(); setCor(1);
+    echo();
 
     mvprintw(3, 0, "Descricao: ");
+    
+    curs_set(1);
     getstr(entrada);
+    curs_set(0);
 
     descricao = string(entrada);
 

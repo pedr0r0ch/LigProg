@@ -153,6 +153,10 @@ void Camada :: removerFundo(){
                 arquivo_copia = string(PyUnicode_AsUTF8(retorno));
             }
 
+            setCor(2);
+            mvprintw(15, 0, "funcao Executada sem erro");
+            getch();
+
             Py_DECREF(retorno);
             Py_DECREF(argumento);
         }
