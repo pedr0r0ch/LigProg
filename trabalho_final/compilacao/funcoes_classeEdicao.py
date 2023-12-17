@@ -1,8 +1,19 @@
 #funcoes que os metodos da classe Edicao utilizam
 
 from PIL import Image
+import os
 
-def sobrepor(arquivoReserva, imagemFundo, imagemFrente, transparencia=0):
+
+def fazerCopiaNome(caminho_arquivo):
+    diretorio, nome_arquivo = os.path.split(caminho_arquivo)
+
+    novo_caminho_arquivo = os.path.join(diretorio, ("copia_" + nome_arquivo))
+
+    return novo_caminho_arquivo
+
+def sobrepor(imagemFundo, imagemFrente, transparencia=0):
+
+    copia_arquivoFundo = fazerCopiaNome(imagemFundo)
 
     imagem_fundo = Image.open(imagemFundo)
     imagem_sobreposta = Image.open(imagemFrente)
@@ -18,4 +29,6 @@ def sobrepor(arquivoReserva, imagemFundo, imagemFrente, transparencia=0):
     imagem_fundo.paste(imagem_sobreposta, (0, 0), imagem_sobreposta)
 
     # Salvar a imagem sobreposta
-    imagem_fundo.save(arquivoReserva)
+    imagem_fundo.save(copia_arquivoFundo)
+
+

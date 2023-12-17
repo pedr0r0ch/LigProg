@@ -30,6 +30,7 @@ class Edicao{
     private:
 
         vector<Camada*> operator+(Camada*); //sobrecarga do operador + para adicionar novas camadas a edicao
+        string converterArquivo(string);
         string sobreporCamadas(); //faz a sobreposicao das camadas respeitando suas prioridades
         void obterNomesArquivos(const string, vector<string>*);
         int fazerCopia(const string&, const string&, string&); //faz uma copia do arquivo recebido no primeiro argumento, para o diretorio do segundo argumento.

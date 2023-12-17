@@ -24,7 +24,8 @@ Edicao :: ~Edicao(){
 void Edicao :: addCamada(){
     
     vector<string> arquivos;
-    string descricao;
+    string descricao,
+           nomeArquivo;
     char entrada[100];
 
     obterNomesArquivos((string(DIR_COMPILACAO) + string(DIR_TRABALHO)), &arquivos);
@@ -52,7 +53,8 @@ void Edicao :: addCamada(){
     if(descricao == "")
         descricao = "Descricao nao fornecida.";
 
-    Camada* camada_ptr = new Camada(("../dir_trabalho/" + arquivos[opcao+1]), descricao);
+    nomeArquivo = converterArquivo(("../dir_trabalho/" + arquivos[opcao+1]));
+    Camada* camada_ptr = new Camada(nomeArquivo, descricao);
     
     (*camada_ptr).exibirCamada();
 
@@ -251,6 +253,9 @@ void Edicao :: edicoesGerais(int indice){
 //exibe a edicao atual, que sao todas as camadas sobrepostas
 void Edicao :: exibirEdicao(){
 
+    string arquivoCopia; 
+
+
     if(camadas.empty())
         return;
     
@@ -259,46 +264,67 @@ void Edicao :: exibirEdicao(){
         return;
     }
 
-    exibirImagem(sobreporCamadas());
+    arquivoCopia = sobreporCamadas();
+    exibirImagem(arquivoCopia);
 
     getch();
 };
 
 //----IMPLEMTANCAO-DE-METODOS-PRIVADOS----
 
-vector<Camada*> Edicao :: operator+(Camada *camada){
-    camadas.push_back(camada);
-    return camadas;
+//converte um arquivo de imagem qualquer para um .png
+string Edicao :: converterArquivo(string nomeArquivo){
+    PyObject* sys = PyImport_ImportModule("sys");
+    PyObject* path = PyObject_GetAttrString(sys, "path");
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
+    PyObject* pModule = PyImport_ImportModule("funcoes_funcoesGlobais");
+
+    if (pModule != nullptr) {
+
+        // OBtendo a referência da função Python
+        PyObject* pFunction = PyObject_GetAttrString(pModule, "converterArquivo");
+        if (pFunction != nullptr && PyCallable_Check(pFunction)) {
+            
+            for(unsigned int indice = 1; indice < camadas.size(); indice++){
+
+                
+                PyObject* pArgs = PyTuple_Pack(1, PyUnicode_DecodeFSDefault(nomeArquivo.c_str()));
+                
+                PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
+
+                if((retorno != NULL) && (PyUnicode_Check(retorno))){
+                    nomeArquivo = string(PyUnicode_AsUTF8(retorno));
+                }
+                
+                Py_DECREF(pArgs);
+                Py_DECREF(retorno);
+
+            };
+
+        }
+        Py_DECREF(pFunction);
+    }
+    Py_DECREF(pModule);
+
+
+    return nomeArquivo;      
 };
 
 //gera um arquivo, resultado de todas as camadas sobrepostas
 string Edicao :: sobreporCamadas(){
     
     string  imagemFundo,
-            imagemFrente,
-            imagemResultante;
+            imagemFrente;
 
     PyObject    *sys,
                 *path,
                 *pModule,
                 *pFunction,
-                *pArgs;
+                *pArgs,
+                *result;
     
 
-    imagemFundo = (*camadas[0]).getArquivo();
-
-    //criando o nome de um novo arquivo copia
-    size_t pos_ultima_barra = imagemFundo.find_last_of("/");
-
-    if (pos_ultima_barra != string::npos) {
-
-        string diretorio = imagemFundo.substr(0, pos_ultima_barra + 1);
-        string nome_arquivo = imagemFundo.substr(pos_ultima_barra + 1);
-
-        imagemResultante = diretorio + "copia_" + nome_arquivo;
-
-    }
-        
+    imagemFundo = (*camadas[0]).getArquivo(); 
 
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
@@ -315,27 +341,25 @@ string Edicao :: sobreporCamadas(){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
                 
-                pArgs = PyTuple_Pack(4,
-                    PyUnicode_DecodeFSDefault(imagemResultante.c_str()),
+                pArgs = PyTuple_Pack(3,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
                     PyUnicode_DecodeFSDefault(imagemFrente.c_str()),
                     PyLong_FromLong((*camadas[indice]).getTransparencia()));
+                
+                PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
-                PyObject_CallObject(pFunction, pArgs);
-                
-                imagemFundo = imagemResultante;   
-                
+                if((retorno != NULL) && (PyUnicode_Check(retorno))){
+                    imagemFundo = string(PyUnicode_AsUTF8(retorno));
+                }
             };
 
             Py_DECREF(pArgs);
             Py_DECREF(pFunction);
         }
         Py_DECREF(pModule);
-        return imagemResultante;
     }
 
-    //ao final do loopin
-    return imagemResultante;      
+    return imagemFundo;      
 };
 
 //obtem os nomes dos arquivos de um diretorio e os organiza em vetor de strings na formatacao necessaria para a funcaoe xibir opcoes

@@ -11,14 +11,19 @@ def exibirArquivoImagem(nomeArquivo):
     except Exception as e:
         return 0
     
-def copiarArquivoImagem(receptor, doador):
+def converterArquivo(arquivo):
+    if arquivo.lower().endswith(".png"):
+        return arquivo
 
-    nome_base, extensao_atual = os.path.splitext(os.path.basename(receptor))
-    
-    novo_caminho = os.path.join(os.path.dirname(receptor), (nome_base + ".png"))
+    imagem = Image.open(arquivo)
+    novo_arquivo = os.path.splitext(arquivo)[0] + ".png"
+    imagem.save(novo_arquivo, "PNG")
+    return novo_arquivo
+
+def copiarArquivoImagem(receptor, doador):
 
     img = Image.open(doador)
 
-    img.save(novo_caminho, "PNG")
+    img.save(receptor, "PNG")
 
-    return novo_caminho
+    return receptor
