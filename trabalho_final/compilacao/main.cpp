@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+#include "/usr/include/python3.10/Python.h"
+
+
 #include "funcoesGlobais.h"
 #include "classeCamada.h"
 #include "classeEdicao.h"
@@ -45,6 +48,8 @@ main(int argc, char**)
                             "Selecinar camada para edicao",\
                             "Exibir edicao atual",\
                             "Salvar edicao e encerrar programa"};
+
+    Py_Initialize();
     while(1){
         opcao = exibirOpcoes(menu);
         switch(opcao){
@@ -78,6 +83,9 @@ main(int argc, char**)
                 break;
         }
     }
+
+    Py_Finalize();//finaliza a API
+
 
     return 0;
 };

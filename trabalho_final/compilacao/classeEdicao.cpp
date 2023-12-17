@@ -296,7 +296,6 @@ string Edicao :: sobreporCamadas(){
 
     }
         
-    Py_Initialize(); //inicializa a API
 
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
@@ -331,7 +330,6 @@ string Edicao :: sobreporCamadas(){
         Py_DECREF(pModule);
         return imagemResultante;
     }
-    Py_Finalize();//finaliza a API
 
     //ao final do loopin
     return imagemResultante;      

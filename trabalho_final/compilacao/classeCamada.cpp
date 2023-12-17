@@ -133,7 +133,6 @@ void Camada :: removerFundo(){
     string arquivo_copia = "";
     int opcao;
         
-    Py_Initialize(); //inicializa a API
     PyObject  *sys = PyImport_ImportModule("sys");
     PyObject  *path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -161,7 +160,6 @@ void Camada :: removerFundo(){
     Py_DECREF(path);
     Py_DECREF(modulo);
 
-    Py_Finalize();//finaliza a API
 
     if(arquivo_copia != "")
             exibirImagem(arquivo_copia);   
@@ -216,7 +214,7 @@ void Camada :: profundidadeCampo(){
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
 
-            Py_Initialize(); //inicializa a API
+            
             PyObject  *sys = PyImport_ImportModule("sys");
             PyObject  *path = PyObject_GetAttrString(sys, "path");
             PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -247,7 +245,6 @@ void Camada :: profundidadeCampo(){
             Py_DECREF(path);
             Py_DECREF(modulo);
 
-            Py_Finalize();//finaliza a API
             
             continue;
 
@@ -323,7 +320,7 @@ void Camada :: menuLuzCor(){
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
 
-            Py_Initialize(); //inicializa a API
+            
             
             PyObject  *sys = PyImport_ImportModule("sys");
             PyObject  *path = PyObject_GetAttrString(sys, "path");
@@ -355,7 +352,7 @@ void Camada :: menuLuzCor(){
             Py_DECREF(path);
             Py_DECREF(modulo);
             
-            Py_Finalize();//finaliza a API  
+            //finaliza a API  
             
             continue;
         }
@@ -388,7 +385,7 @@ void Camada :: copiarConteudo(string receptor, string doador){
               *funcao,
               *argumentos;
     
-    Py_Initialize(); //inicializa a API
+    
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -412,7 +409,7 @@ void Camada :: copiarConteudo(string receptor, string doador){
         Py_DECREF(modulo);
     }
 
-    Py_Finalize();//finaliza a API
+    //finaliza a API
 };
 
 

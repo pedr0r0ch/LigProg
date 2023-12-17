@@ -94,8 +94,7 @@ int exibirOpcoes(vector<string>& opcoes){ //funcao que exibe o menu interativo
 
 void exibirImagem(string caminhoImagem){
     // exibe a imagem com as alteracoes mais recentes
-    
-    Py_Initialize(); //inicializa a API
+
 
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
@@ -121,7 +120,7 @@ void exibirImagem(string caminhoImagem){
         Py_DECREF(pModule);
     }
 
-    Py_Finalize();//finaliza a API
+    
 };
 
 void setCor(int n){
