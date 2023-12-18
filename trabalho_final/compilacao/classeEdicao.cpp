@@ -282,9 +282,7 @@ void Edicao :: exibirEdicao(){
 
 //converte um arquivo de imagem qualquer para um .png
 string Edicao :: converterArquivo(string nomeArquivo){
-    setCor(1);
-    mvprintw(15,0,"entrndo na funcao");
-    getch();
+    
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -292,48 +290,33 @@ string Edicao :: converterArquivo(string nomeArquivo){
     PyObject* pModule = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
 
     if (pModule != nullptr) {
-        mvprintw(15,0,"modulo diferente de null");
-        getch();
 
         // OBtendo a referência da função Python
         PyObject* pFunction = PyObject_GetAttrString(pModule, "converterExtensao");
         
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
-            
-            for(unsigned int indice = 1; indice < camadas.size(); indice++){
-
                 
-                PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
-                mvprintw(15,0,"chamando a funcao");
-                getch();
-                PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
+            PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
+            PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
-                if((retorno != NULL) && (PyUnicode_Check(retorno))){
-                    
-                    Py_DECREF(pArg);
-                    Py_DECREF(retorno);
-                    Py_DECREF(pFunction);
-                    Py_DECREF(pModule);
-
-                    setCor(1);
-                    mvprintw(15, 0, "Retornando");
-                    getch();
-
-                    return string(PyUnicode_AsUTF8(retorno));
-                }
+            if((retorno != NULL) && (PyUnicode_Check(retorno))){
                 
                 Py_DECREF(pArg);
                 Py_DECREF(retorno);
+                Py_DECREF(pFunction);
+                Py_DECREF(pModule);
 
-            };
+                return string(PyUnicode_AsUTF8(retorno));
+            }
+            
+            Py_DECREF(pArg);
+            Py_DECREF(retorno);
 
         }
         Py_DECREF(pFunction);
     }
     Py_DECREF(pModule);
 
-    mvprintw(15,0,"Ultimo retorno");
-    getch();
     return nomeArquivo;      
 };
 
