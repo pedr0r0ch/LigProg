@@ -1,3 +1,5 @@
+#include "/usr/include/python3.10/Python.h"
+
 #include "classeEdicao.h"
 #include "funcoesGlobais.h"
 
@@ -287,10 +289,7 @@ void Edicao :: exibirEdicao(){
 
 //converte um arquivo de imagem qualquer para um .png
 void Edicao :: converterArquivo(string &nomeArquivo){
-
-    setCor(1);
-    mvprintw(15,0,"entrou na funcao");
-    getch();
+    
     
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
@@ -299,16 +298,11 @@ void Edicao :: converterArquivo(string &nomeArquivo){
     PyObject* pModule = PyImport_ImportModule("funcoes_funcoesGlobais");
 
     if (pModule != nullptr) {
-        mvprintw(15,0,"moodulo encontrado");
-        getch();
 
         // OBtendo a referência da função Python
         PyObject* pFunction = PyObject_GetAttrString(pModule, "converterArquivo");
         
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
-            
-            mvprintw(15,0, "chamando funcao");
-            getch();
 
 
             PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
@@ -317,6 +311,9 @@ void Edicao :: converterArquivo(string &nomeArquivo){
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
                 
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
+                setCor(1);
+                mvprintw(15, 0, "nome %s", nomeArquivo.c_str());
+                getch();
                
                 Py_DECREF(retorno);
             }
