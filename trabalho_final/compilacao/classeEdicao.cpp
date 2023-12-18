@@ -291,12 +291,14 @@ string Edicao :: converterArquivo(string nomeArquivo){
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    PyObject* pModule = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
+    PyObject* pModule = PyImport_ImportModule("funcoes_funcoesGlobais");
 
     if (pModule != nullptr) {
+        mvprintw(15,0,"moodulo encontrado");
+        getch();
 
         // OBtendo a referência da função Python
-        PyObject* pFunction = PyObject_GetAttrString(pModule, "converterExtensao");
+        PyObject* pFunction = PyObject_GetAttrString(pModule, "converterArquivo");
         
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
             
@@ -309,7 +311,7 @@ string Edicao :: converterArquivo(string nomeArquivo){
 
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
-                mvprintw(15,0, "valor atribuido");
+                mvprintw(15,0, "valor atribuido: %s", nomeArquivo.c_str());
                 getch();
             }
 
@@ -318,13 +320,13 @@ string Edicao :: converterArquivo(string nomeArquivo){
 
 
             
-            Py_XDECREF(pArg);
-            Py_DECREF(retorno);
+            //Py_XDECREF(pArg);
+            //Py_DECREF(retorno);
 
         }
-        Py_XDECREF(pFunction);
+        //Py_XDECREF(pFunction);
     }
-    Py_XDECREF(pModule);
+    //Py_XDECREF(pModule);
 
     return nomeArquivo;      
 };

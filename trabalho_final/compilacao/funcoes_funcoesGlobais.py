@@ -1,15 +1,6 @@
 #funcoes que as funcoes globais utilizam
-import os
+from pathlib import Path 
 from PIL import Image
-
-def converterExtensao(arquivo):
-    ##if(arquivo.lower().endswith(".png")):
-        ##return arquivo
-    imagem = Image.open(arquivo)
-    novo_arquivo = os.path.splitext(arquivo)[0] + ".png"
-    imagem.save(novo_arquivo, "PNG")
-    ##return novo_arquivo
-    return "arquivo     "
 
 def exibirArquivoImagem(nomeArquivo):
     try:
@@ -27,3 +18,12 @@ def copiarArquivoImagem(receptor, doador):
     img.save(receptor, "PNG")
 
     return receptor
+
+def converterArquivo(arquivoOriginal):
+    
+    arquivoCopia = Path(arquivoOriginal).stem + ".png"
+
+    img = Image.open(arquivoOriginal)
+    img.save(arquivoCopia, "PNG")
+
+    return arquivoCopia
