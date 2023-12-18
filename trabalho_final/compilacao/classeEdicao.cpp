@@ -312,7 +312,7 @@ void Edicao :: converterArquivo(string &nomeArquivo){
                 
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
                 setCor(1);
-                mvprintw(15, 0, "nome %s", nomeArquivo.c_str());
+                mvprintw(15, 0, "nome aaaaaaaaaaaaaaaaaa%s", nomeArquivo.c_str());
                 getch();
                
                 Py_DECREF(retorno);
