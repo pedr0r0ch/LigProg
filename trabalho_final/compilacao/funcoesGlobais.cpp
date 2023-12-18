@@ -143,6 +143,45 @@ void resetCor(){
         attroff(COLOR_PAIR(0));
 };
 
+//copia o conteudo de arquivo 1 para o arquivo 2
+void copiarConteudo(string *receptor, string doador){
+    
+    PyObject  *sys,
+              *path,
+              *modulo,
+              *funcao,
+              *argumentos,
+              *retorno;
+    
+    
+    sys = PyImport_ImportModule("sys");
+    path = PyObject_GetAttrString(sys, "path");
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
+    
+    modulo = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
+    if (modulo != nullptr) {
+
+        funcao = PyObject_GetAttrString(modulo, "copiarArquivoImagem");
+        if (funcao != nullptr && PyCallable_Check(funcao)) {
+            
+            argumentos = PyTuple_Pack(2,
+                    PyUnicode_DecodeFSDefault((*receptor).c_str()),
+                    PyUnicode_DecodeFSDefault(doador.c_str()));
+
+            retorno = PyObject_CallObject(funcao, argumentos);
+            
+            if(retorno != NULL)
+                (*receptor) = string(PyUnicode_AsUTF8(retorno));
+
+            Py_DECREF(argumentos);
+            Py_DECREF(funcao);
+        }
+        
+        Py_DECREF(modulo);
+    }
+
+    //finaliza a API
+};
 
 
 

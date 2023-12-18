@@ -18,6 +18,22 @@ Edicao :: Edicao(string imagemFundo){
 //remove todos os arquivos utilizados mantendo a image resultante
 //libera amemoria alocada para os objetos da classe camada
 Edicao :: ~Edicao(){
+    
+    vector<string> nomesArquivos;
+    
+    string edicaoFinal;
+    string arquivo_copia = sobreporCamadas();
+
+    edicaoFinal = string(DIR_TRABALHO) + "edicaoFinal.png";
+
+    copiarConteudo(&edicaoFinal, arquivo_copia);
+    obterNomesArquivos(string(DIR_TRABALHO), &nomesArquivos);
+
+    for(unsigned n = 1; n < nomesArquivos.size(); n++){
+        if((string(DIR_TRABALHO) + nomesArquivos[n]) == edicaoFinal)
+            continue;
+        remove((string(DIR_TRABALHO) + nomesArquivos[n]).c_str());
+    }
 };
 
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----
@@ -48,7 +64,6 @@ void Edicao :: addCamada(){
 
     mvprintw(3, 0, "Descricao: ");
     
-    curs_set(1);
     getstr(entrada);
     curs_set(0);
 
@@ -243,7 +258,7 @@ int Edicao :: selecionarCamada(){
 
         if(tecla == 10 || tecla == 13){
             echo();
-            curs_set(1);
+    
             return opcao; // considerando que a primeira linha sempre vai ser uma opcao de voltar/cancelar
         }
 

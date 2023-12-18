@@ -21,4 +21,7 @@ void setCor(int);
 
 void resetCor();
 
+void copiarConteudo(string *, string);
+
+
 #endif

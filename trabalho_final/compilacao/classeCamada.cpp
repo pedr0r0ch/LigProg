@@ -44,8 +44,8 @@ void Camada :: setTransparencia(){
         tecla = getch();
 
         if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-            if(transparencia == 0.0){
-                transparencia = 1.0;
+            if(transparencia == (double)0.0){
+                transparencia = (double)1.0;
                 continue;
             }else{
                 transparencia = transparencia - 0.1;
@@ -54,8 +54,8 @@ void Camada :: setTransparencia(){
         }
 
         if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-            if(transparencia == 1.0){
-                transparencia = 0.0;
+            if(transparencia == (double)1.0){
+                transparencia = (double)0.0;
                 continue;
             }else{
                 transparencia = transparencia + 0.1;
@@ -73,6 +73,7 @@ void Camada :: setTransparencia(){
 
 //metodo com opcoes gerais como remover fundo, aplicar efeito de desfoque etc.
 void Camada :: edicoesGerais(){
+    curs_set(0);
     
     int opcao;
 
@@ -128,6 +129,7 @@ string Camada :: getArquivo(){
 
 //remove o plano de fundo, restando apenas a imagem
 void Camada :: removerFundo(){
+    
     
     vector<string> opcoes =  { "Descartar alteracao e voltar",
                                "Salvar alteraco"};
@@ -230,8 +232,8 @@ void Camada :: profundidadeCampo(){
             tecla = getch();
 
             if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-                if(intensidade == 0.0){
-                    intensidade = 10;
+                if(intensidade == (double)0.0){
+                    intensidade = (double)10;
                     continue;
                 }else{
                     intensidade = intensidade - 1;
@@ -240,8 +242,8 @@ void Camada :: profundidadeCampo(){
             }
 
             if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-                if(intensidade == 10){
-                    intensidade = 0.0;
+                if(intensidade == (double)10){
+                    intensidade = (double)0.0;
                     continue;
                 }else{
                     intensidade = intensidade + 1;
@@ -366,8 +368,8 @@ void Camada :: menuLuzCor(){
                 tecla = getch();
 
                 if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-                    if(intensidade == 0.0){
-                        intensidade = 2.0;
+                    if(intensidade == (double)0){
+                        intensidade = (double)2;
                         continue;
                     }else{
                         intensidade = intensidade - 0.1;
@@ -376,8 +378,8 @@ void Camada :: menuLuzCor(){
                 }
 
                 if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-                    if(intensidade == 2.0){
-                        intensidade = 0.0;
+                    if(intensidade == (double)2.0){
+                        intensidade = (double)0.0;
                         continue;
                     }else{
                         intensidade = intensidade + 0.1;
@@ -464,45 +466,6 @@ void Camada :: menuLuzCor(){
     }
 };
 
-//copia o conteudo de arquivo 1 para o arquivo 2
-void Camada :: copiarConteudo(string *receptor, string doador){
-    
-    PyObject  *sys,
-              *path,
-              *modulo,
-              *funcao,
-              *argumentos,
-              *retorno;
-    
-    
-    sys = PyImport_ImportModule("sys");
-    path = PyObject_GetAttrString(sys, "path");
-    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
-    
-    modulo = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
-    if (modulo != nullptr) {
-
-        funcao = PyObject_GetAttrString(modulo, "copiarArquivoImagem");
-        if (funcao != nullptr && PyCallable_Check(funcao)) {
-            
-            argumentos = PyTuple_Pack(2,
-                    PyUnicode_DecodeFSDefault((*receptor).c_str()),
-                    PyUnicode_DecodeFSDefault(doador.c_str()));
-
-            retorno = PyObject_CallObject(funcao, argumentos);
-            
-            if(retorno != NULL)
-                (*receptor) = string(PyUnicode_AsUTF8(retorno));
-
-            Py_DECREF(argumentos);
-            Py_DECREF(funcao);
-        }
-        
-        Py_DECREF(modulo);
-    }
-
-    //finaliza a API
-};
 
 
 
