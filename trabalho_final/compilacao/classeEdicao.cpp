@@ -349,11 +349,15 @@ string Edicao :: sobreporCamadas(){
     pModule = PyImport_ImportModule("funcoes_classeEdicao");
 
     if (pModule != nullptr) {
+        mvprintw(15, 0, "modulo diferente de null");
+        getch();
 
         // OBtendo a referência da função Python
         pFunction = PyObject_GetAttrString(pModule, "sobrepor");
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
-            
+             mvprintw(15, 0, "funcao diferente de null");
+            getch();
+
             for(unsigned int indice = 1; indice < camadas.size(); indice++){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
@@ -363,10 +367,16 @@ string Edicao :: sobreporCamadas(){
                     PyUnicode_DecodeFSDefault(imagemFrente.c_str()),
                     PyFloat_FromDouble((*camadas[indice]).getTransparencia()));
                 
+                mvprintw(15, 0, "Chamando a funcao python");
+                getch();
+
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
+                    
+                    mvprintw(15, 0, "Valor de retorno: %s", imagemFundo.c_str());
+                    getch();
                 }
             };
 
