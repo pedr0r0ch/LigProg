@@ -284,6 +284,8 @@ void Edicao :: exibirEdicao(){
 string Edicao :: converterArquivo(string nomeArquivo){
 
     setCor(1);
+    mvprintw(15,0,"entrou na funcao");
+    getch();
     
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
@@ -299,15 +301,21 @@ string Edicao :: converterArquivo(string nomeArquivo){
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
             
             mvprintw(15,0, "chamando funcao");
+            getch();
+
 
             PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
             PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
+                mvprintw(15,0, "valor atribuido");
+                getch();
             }
 
             mvprintw(15,0, "funcao foi chamada");
+            getch();
+
 
             
             Py_DECREF(pArg);
