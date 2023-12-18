@@ -326,6 +326,9 @@ void Edicao :: converterArquivo(string &nomeArquivo){
 
 //gera um arquivo, resultado de todas as camadas sobrepostas
 string Edicao :: sobreporCamadas(){
+
+    setCor(1);
+    mvprintw(15, 0, "Funcao sobrepor camadas send executada");
     
     string  imagemFundo,
             imagemFrente;
