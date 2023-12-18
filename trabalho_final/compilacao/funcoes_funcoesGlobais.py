@@ -1,6 +1,15 @@
 #funcoes que as funcoes globais utilizam
-from pathlib import Path 
+import os
 from PIL import Image
+
+def fazerCopiaNome(caminho_arquivo, prefixo = "copia_"):
+    nome_base, extensao_atual = os.path.splitext(os.path.basename(caminho_arquivo))
+
+    novo_nome = prefixo + nome_base + ".png"
+
+    novo_caminho = os.path.join(os.path.dirname(caminho_arquivo), novo_nome)
+
+    return novo_caminho
 
 def exibirArquivoImagem(nomeArquivo):
     try:
@@ -21,9 +30,11 @@ def copiarArquivoImagem(receptor, doador):
 
 def converterArquivo(arquivoOriginal):
     
-    arquivoCopia = Path(arquivoOriginal).stem + ".png"
+    arquivoCopia = fazerCopiaNome(arquivoOriginal, "editor_")
 
     img = Image.open(arquivoOriginal)
     img.save(arquivoCopia, "PNG")
+    
+    os.remove(arquivoOriginal)
 
     return arquivoCopia

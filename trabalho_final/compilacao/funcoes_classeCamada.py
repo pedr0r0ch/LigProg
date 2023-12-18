@@ -1,12 +1,11 @@
 #funcoes que os metodos da classe Camada utilizam   
 
-import os
-
 from rembg import remove
 from PIL import Image
 from PIL import ImageFilter
 from PIL import ImageEnhance
 
+from funcoes_funcoesGlobais import fazerCopiaNome
 
 
 def manterObjeto(imagemOriginal):
@@ -66,12 +65,3 @@ def alterarSaturacao(imagemOriginal, intensidade):
     imagem_com_saturacao.save(imagemCopia, "PNG")
 
     return imagemCopia
-
-def fazerCopiaNome(caminho_arquivo):
-    nome_base, extensao_atual = os.path.splitext(os.path.basename(caminho_arquivo))
-
-    novo_nome = "copia_" + nome_base + ".png"
-
-    novo_caminho = os.path.join(os.path.dirname(caminho_arquivo), novo_nome)
-
-    return novo_caminho

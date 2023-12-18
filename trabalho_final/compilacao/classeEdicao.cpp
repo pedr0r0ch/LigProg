@@ -59,9 +59,6 @@ void Edicao :: addCamada(){
     mvprintw(15, 0, "%s", nomeArquivo.c_str());
     getch();
     
-
-    remove(("../dir_trabalho/" + arquivos[opcao+1]).c_str());
-
     Camada* camada_ptr = new Camada(nomeArquivo, descricao);
     
     (*camada_ptr).exibirCamada();
