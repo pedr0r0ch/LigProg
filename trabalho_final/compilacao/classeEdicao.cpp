@@ -318,13 +318,13 @@ string Edicao :: converterArquivo(string nomeArquivo){
 
 
             
-            Py_DECREF(pArg);
+            Py_XDECREF(pArg);
             Py_DECREF(retorno);
 
         }
-        Py_DECREF(pFunction);
+        Py_XDECREF(pFunction);
     }
-    Py_DECREF(pModule);
+    Py_XDECREF(pModule);
 
     return nomeArquivo;      
 };
