@@ -5,7 +5,7 @@
 
 namespace fs = std::filesystem;
 
-//----CONSTRUTOR-E-DESTRUTOR---------------
+//----CONSTRUTOR-E-DESTRUTOR---------------|
 
 Edicao :: Edicao(){
 };
