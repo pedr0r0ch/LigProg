@@ -27,9 +27,7 @@ void Camada :: setTransparencia(){
     
     curs_set(0);
     char tecla;
-    double  transparencia,
-            limiteInferior = 0.0,
-            limiteSuperior = 1.0;
+    double  transparencia;
 
     while(1){
         clear();
@@ -47,8 +45,8 @@ void Camada :: setTransparencia(){
         tecla = getch();
 
         if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-            if(transparencia == limiteInferior){
-                transparencia = limiteSuperior;
+            if((transparencia - 0.1) < 0){
+                transparencia = 1;
                 continue;
             }else{
                 transparencia = transparencia - 0.1;
@@ -57,8 +55,8 @@ void Camada :: setTransparencia(){
         }
 
         if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-            if(transparencia == limiteSuperior){
-                transparencia = limiteInferior;
+            if((transparencia + 0.1) > 1.0){
+                transparencia = 0;
                 continue;
             }else{
                 transparencia = transparencia + 0.1;
@@ -327,9 +325,7 @@ void Camada :: menuLuzCor(){
     
     int opcao_1;
 
-    double intensidade = 1.0,
-           limiteInferior = 0.0, 
-           limiteSuperior = 2.0;
+    double intensidade = 1.0;
     
     char tecla;
 
@@ -373,8 +369,8 @@ void Camada :: menuLuzCor(){
                 tecla = getch();
 
                 if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-                    if(intensidade == limiteInferior){
-                        intensidade = limiteSuperior;
+                    if((intensidade - 0.1) < 0.0){
+                        intensidade = 2.0;
                         continue;
                     }else{
                         intensidade = intensidade - 0.1;
@@ -383,8 +379,8 @@ void Camada :: menuLuzCor(){
                 }
 
                 if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-                    if(intensidade == limiteSuperior){
-                        intensidade = limiteInferior;
+                    if((intensidade + 0.1) > 2.0){
+                        intensidade = 0.0;
                         continue;
                     }else{
                         intensidade = intensidade + 0.1;
