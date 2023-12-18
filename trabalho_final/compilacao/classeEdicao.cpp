@@ -26,7 +26,9 @@ void Edicao :: addCamada(){
     vector<string> arquivos;
     string descricao,
            nomeArquivo;
+    
     char entrada[100];
+
 
     obterNomesArquivos((string(DIR_COMPILACAO) + string(DIR_TRABALHO)), &arquivos);
     int opcao = exibirOpcoes(arquivos);
@@ -53,10 +55,16 @@ void Edicao :: addCamada(){
     if(descricao == "")
         descricao = "Descricao nao fornecida.";
 
-    nomeArquivo = converterArquivo(("../dir_trabalho/" + arquivos[opcao+1]));
+    nomeArquivo = string("../dir_trabalho/") + arquivos[opcao+1];
     
     setCor(1);
-    mvprintw(15, 0, "%s", nomeArquivo.c_str());
+    mvprintw(15, 0, "primeiro nome %s", nomeArquivo.c_str());
+    getch();
+
+    converterArquivo(nomeArquivo);
+    
+    setCor(1);
+    mvprintw(15, 0, "segundo nome %s", nomeArquivo.c_str());
     getch();
     
     Camada* camada_ptr = new Camada(nomeArquivo, descricao);
@@ -278,7 +286,7 @@ void Edicao :: exibirEdicao(){
 //----IMPLEMTANCAO-DE-METODOS-PRIVADOS----
 
 //converte um arquivo de imagem qualquer para um .png
-string Edicao :: converterArquivo(string nomeArquivo){
+void Edicao :: converterArquivo(string &nomeArquivo){
 
     setCor(1);
     mvprintw(15,0,"entrou na funcao");
@@ -307,25 +315,20 @@ string Edicao :: converterArquivo(string nomeArquivo){
             PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
+                
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
-                mvprintw(15,0, "valor atribuido: %s", nomeArquivo.c_str());
-                getch();
+               
+                Py_DECREF(retorno);
             }
-
-            mvprintw(15,0, "funcao foi chamada");
-            getch();
-
-
-            
-            //Py_XDECREF(pArg);
-            //Py_DECREF(retorno);
+            Py_XDECREF(pArg);
 
         }
-        //Py_XDECREF(pFunction);
+        
+        Py_XDECREF(pFunction);
     }
-    //Py_XDECREF(pModule);
+    
+    Py_XDECREF(pModule);
 
-    return nomeArquivo;      
 };
 
 //gera um arquivo, resultado de todas as camadas sobrepostas
