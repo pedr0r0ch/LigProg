@@ -273,8 +273,6 @@ void Edicao :: exibirEdicao(){
 
     arquivoCopia = sobreporCamadas();
     exibirImagem(arquivoCopia);
-
-    getch();
 };
 
 //----IMPLEMTANCAO-DE-METODOS-PRIVADOS----
@@ -347,7 +345,7 @@ string Edicao :: sobreporCamadas(){
                 pArgs = PyTuple_Pack(3,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
                     PyUnicode_DecodeFSDefault(imagemFrente.c_str()),
-                    PyLong_FromLong((*camadas[indice]).getTransparencia()));
+                    PyFloat_FromDouble((*camadas[indice]).getTransparencia()));
                 
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
@@ -366,7 +364,7 @@ string Edicao :: sobreporCamadas(){
 };
 
 //obtem os nomes dos arquivos de um diretorio e os organiza em vetor de strings na formatacao necessaria para a funcaoe xibir opcoes
-void Edicao::obterNomesArquivos(const string caminho, vector<string>* nomesArquivos) {
+void Edicao::obterNomesArquivos(const string caminho, vector<string>* nomesArquivos) { 
     nomesArquivos->push_back("Voltar (! encerrar programa)");
 
     for (const auto& entry : fs::directory_iterator(caminho)) {

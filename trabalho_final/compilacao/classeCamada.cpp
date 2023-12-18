@@ -17,64 +17,56 @@ Camada :: ~Camada(){
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----
 
 //retorna a trasparencia da camada
-unsigned Camada :: getTransparencia(){
-   return (unsigned)this->transparencia; 
+double Camada :: getTransparencia(){
+   return (double)this->transparencia; 
 }; 
 
 //metodo para definir a transparencia da camada
 void Camada :: setTransparencia(){
-    clear();
     
-    char mensagem[4];
-    int transparencia;
+    curs_set(0);
+    char tecla;
+    double transparencia;
 
-    do{
-        mvprintw(4, 1, "Digite a porcentagem da transparencia da imagem: ");
-        getstr(mensagem);
+    while(1){
+        clear();
+        refresh();
 
-        try {
-            transparencia = stoi(mensagem);
+        setCor(4);
+        mvprintw(0, 1, "! Use as teclas W, S e 'enter' para almentar");
+        mvprintw(1, 1, "ou diminuir o efeito de profundidade de campo");
+        resetCor();
 
-        } catch (const invalid_argument& e) {
-            
-            setCor(2);
-            mvprintw(10, 1, "! Erro: O numero submetido eh invalido.");
-            setCor(4);
-            mvprintw(1, 1, "! Pressione enter para prosseguir.");
-            resetCor();
-            
-            getch();
+        setCor(1);
+        mvprintw(3, 0, "O nivel padrao para a trasparencia/opacidade eh: 100%%");
+        mvprintw(4, 0, "Ajustar efeito de profundidade de campo para %.0f%%", (transparencia * 100.0));
 
-            move(10, 0);
-            clrtoeol();
-            move(1, 0);
-            clrtoeol();
+        tecla = getch();
 
-            continue;
+        if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
+            if(transparencia == 0.0){
+                transparencia = 1.0;
+                continue;
+            }else{
+                transparencia = transparencia - 0.1;
+                continue;
+            }
         }
 
-        if(transparencia < 0 || transparencia > 100){
-            
-            setCor(2);
-            mvprintw(10, 1, "! Erro: Apenas sao permitidos numeros entre 0 e 100.");
-            resetCor();
-
-            setCor(4);
-            mvprintw(1, 1, "! Pressione enter para prosseguir.");
-            resetCor();
-            
-            getch();
-
-            move(10, 0);
-            clrtoeol();
-            move(1, 0);
-            clrtoeol();
-
-            continue;
+        if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
+            if(transparencia == 1.0){
+                transparencia = 0.0;
+                continue;
+            }else{
+                transparencia = transparencia + 0.1;
+                continue;
+            }
         }
-       
-        break;
-    }while(1);
+
+        if(tecla == 10 || tecla == 13){
+            break;
+        }
+    }
 
     this->transparencia = transparencia;
 };
@@ -212,91 +204,121 @@ void Camada :: removerFundo(){
 void Camada :: profundidadeCampo(){
 
     int opcao = -1;
+    char tecla;
+    double intensidade = 0;
+
     string arquivo_copia = "";
     vector<string> opcoes = {"Voltar e cancelar operacao",
-                             "Intensidade 1 (Menos desfocado)",
-                             "Intensidade 2",
-                             "Intensidade 3",
-                             "Intensidade 4 (Moderadamente desfocado)",
-                             "Intensidade 5",
-                             "Intensidade 6",
-                             "Intensidade 7 (Mais desfoacado)",
                              "Salvar e sair"};
 
     while(1){
-        opcao = exibirOpcoes(opcoes); 
-        
-        if(opcao == -1)
-            return;
+        while(1){
+                clear();
+                refresh();
 
-        if(opcao != 7){
+                setCor(4);
+                mvprintw(0, 1, "! Use as teclas W, S e 'enter' para almentar");
+                mvprintw(1, 1, "ou diminuir o efeito de profundidade de campo");
+                resetCor();
 
-            if(arquivo_copia != "")
-                remove(arquivo_copia.c_str());
-            
-            clear();
-            curs_set(0);
-            noecho();
+                setCor(1);
+                mvprintw(3, 0, "O nivel padrao do efeito de profundidade de campo eh: 0%%");
+                mvprintw(4, 0, "Ajustar efeito de profundidade de campo para %.0f%%", (intensidade * 10.0));
 
-            setCor(5);
-            mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
-            resetCor();
-            
-            PyObject  *sys = PyImport_ImportModule("sys");
-            PyObject  *path = PyObject_GetAttrString(sys, "path");
-            PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
-            
-            PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
-            if (modulo != nullptr) {
+                tecla = getch();
 
-                PyObject  *funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
-                if (funcao != nullptr && PyCallable_Check(funcao)) {
-                    
-                    PyObject  *argumentos = PyTuple_Pack(2, 
-                    PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong((opcao + 1)*2));
-
-                    PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
-                    
-
-                    if(retorno != NULL){
-                        arquivo_copia = string(PyUnicode_AsUTF8(retorno));
+                if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
+                    if(intensidade == 0.0){
+                        intensidade = 10;
+                        continue;
+                    }else{
+                        intensidade = intensidade - 1;
+                        continue;
                     }
-
-                    Py_DECREF(retorno);
-                    Py_DECREF(argumentos);
                 }
-                Py_DECREF(funcao);                
-            }
 
-            Py_DECREF(sys);
-            Py_DECREF(path);
-            Py_DECREF(modulo);
+                if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
+                    if(intensidade == 10){
+                        intensidade = 0.0;
+                        continue;
+                    }else{
+                        intensidade = intensidade + 1;
+                        continue;
+                    }
+                }
 
-            if(arquivo_copia != "")
-                exibirImagem(arquivo_copia);
-
-            continue;
+                if(tecla == 10 || tecla == 13){
+                    break;
+                }
         }
 
-        if(arquivo_copia != ""){
-            copiarConteudo(&imagem, arquivo_copia);
+        if(arquivo_copia != "")
             remove(arquivo_copia.c_str());
-            return;
+        
+        clear();
+        curs_set(0);
+        noecho();
+
+        setCor(5);
+        mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
+        resetCor();
+        
+        PyObject  *sys = PyImport_ImportModule("sys");
+        PyObject  *path = PyObject_GetAttrString(sys, "path");
+        PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
+        
+        PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
+        if (modulo != nullptr) {
+
+            PyObject  *funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
+            if (funcao != nullptr && PyCallable_Check(funcao)) {
+                
+                PyObject  *argumentos = PyTuple_Pack(2, 
+                PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong(intensidade));
+
+                PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
+                
+
+                if(retorno != NULL){
+                    arquivo_copia = string(PyUnicode_AsUTF8(retorno));
+                }
+
+                Py_DECREF(retorno);
+                Py_DECREF(argumentos);
+            }
+            Py_DECREF(funcao);                
         }
 
-        clear();
-        setCor(4);
-        mvprintw(0, 0, "Pressione enter para continuar");
-        setCor(1);
-        mvprintw(2, 0, "Arquivo nao salvo");
-        resetCor();
+        Py_DECREF(sys);
+        Py_DECREF(path);
+        Py_DECREF(modulo);
 
-        getch();
-        return;
-    };
+        if(arquivo_copia != "")
+            exibirImagem(arquivo_copia);
 
+        continue;
+    }
+
+    opcao = exibirOpcoes(opcoes); 
     
+    if(opcao == -1)
+        return;
 
+    if(arquivo_copia != ""){
+        copiarConteudo(&imagem, arquivo_copia);
+        remove(arquivo_copia.c_str());
+        return;
+    }
+
+    clear();
+    setCor(4);
+    mvprintw(0, 0, "Pressione enter para continuar");
+    setCor(1);
+    mvprintw(2, 0, "Arquivo nao salvo");
+    resetCor();
+
+    getch();
+    return;
 };
 
 //altera brilho, saturacao e contraste
@@ -366,18 +388,20 @@ void Camada :: menuLuzCor(){
                     if(intensidade == 0.0){
                         intensidade = 2.0;
                         continue;
+                    }else{
+                        intensidade = intensidade - 0.1;
+                        continue;
                     }
-                    intensidade = intensidade - 0.1;
-                    continue;
                 }
 
                 if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
                     if(intensidade == 2.0){
                         intensidade = 0.0;
                         continue;
+                    }else{
+                        intensidade = intensidade + 0.1;
+                        continue;
                     }
-                    intensidade = intensidade + 0.1;
-                    continue;
                 }
 
                 if(tecla == 10 || tecla == 13){

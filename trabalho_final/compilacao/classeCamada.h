@@ -20,7 +20,7 @@ class Camada{
         void edicoesGerais();
         void exibirCamada();
         void setTransparencia();
-        unsigned getTransparencia();
+        double getTransparencia();
         string getArquivo();
         string getDescricao();
 
@@ -31,7 +31,7 @@ class Camada{
         void menuLuzCor();
         void copiarConteudo(string*, string);
 
-        int transparencia;
+        double transparencia;
         string imagem;
         string descricao;
 };      

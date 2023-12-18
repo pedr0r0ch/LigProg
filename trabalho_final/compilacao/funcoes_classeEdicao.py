@@ -11,24 +11,15 @@ def fazerCopiaNome(caminho_arquivo):
 
     return novo_caminho_arquivo
 
-def sobrepor(imagemFundo, imagemFrente, transparencia=0):
+def sobrepor(imagemFundo, imagemFrente, transparencia = 1.0):
 
-    copia_arquivoFundo = fazerCopiaNome(imagemFundo)
+    arquivoCopia = fazerCopiaNome(imagemFundo)
 
-    imagem_fundo = Image.open(imagemFundo)
-    imagem_sobreposta = Image.open(imagemFrente)
+    camada_1 = Image.open(imagemFundo)
+    camada_2 = Image.open(imagemFrente)
+    
+    Image.blend(camada_1, camada_2, transparencia).save(arquivoCopia)
 
-    # convertendo as imagens para o modo RGBA para que sejapossivel controlar a trasnparencia
-    imagem_fundo = imagem_fundo.convert("RGBA")
-    imagem_sobreposta = imagem_sobreposta.convert("RGBA")
-
-    imagem_sobreposta = Image.eval(imagem_sobreposta, lambda x: x * transparencia)
-
-
-    # Sobrepondo as imagens
-    imagem_fundo.paste(imagem_sobreposta, (0, 0), imagem_sobreposta)
-
-    # Salvar a imagem sobreposta
-    imagem_fundo.save(copia_arquivoFundo)
+    return arquivoCopia
 
 
