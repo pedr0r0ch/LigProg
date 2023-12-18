@@ -59,15 +59,7 @@ void Edicao :: addCamada(){
 
     nomeArquivo = string("../dir_trabalho/") + arquivos[opcao+1];
     
-    setCor(1);
-    mvprintw(15, 0, "primeiro nome %s", nomeArquivo.c_str());
-    getch();
-
     converterArquivo(nomeArquivo);
-    
-    setCor(1);
-    mvprintw(15, 0, "segundo nome %s", nomeArquivo.c_str());
-    getch();
     
     Camada* camada_ptr = new Camada(nomeArquivo, descricao);
     
@@ -290,7 +282,6 @@ void Edicao :: exibirEdicao(){
 //converte um arquivo de imagem qualquer para um .png
 void Edicao :: converterArquivo(string &nomeArquivo){
     
-    
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -309,12 +300,7 @@ void Edicao :: converterArquivo(string &nomeArquivo){
             PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
-                
                 nomeArquivo = string(PyUnicode_AsUTF8(retorno));
-                setCor(1);
-                mvprintw(15, 0, "nome aaaaaaaaaaaaaaaaaa%s", nomeArquivo.c_str());
-                getch();
-               
                 Py_DECREF(retorno);
             }
             Py_XDECREF(pArg);
@@ -380,15 +366,17 @@ string Edicao :: sobreporCamadas(){
 };
 
 //obtem os nomes dos arquivos de um diretorio e os organiza em vetor de strings na formatacao necessaria para a funcaoe xibir opcoes
-void Edicao :: obterNomesArquivos (const string caminho, vector<string>* nomesArquivos) {
-
-    (*nomesArquivos).push_back("Voltar (! encerrar programa)");
+void Edicao::obterNomesArquivos(const string caminho, vector<string>* nomesArquivos) {
+    nomesArquivos->push_back("Voltar (! encerrar programa)");
 
     for (const auto& entry : fs::directory_iterator(caminho)) {
         if (fs::is_regular_file(entry.path())) {
-            (*nomesArquivos).push_back(entry.path().filename().string());
+            // Verifica se a extensão é ".png"
+            if (entry.path().extension() == ".png") {
+                nomesArquivos->push_back(entry.path().filename().string());
+            }
         }
     }
-};
+}
 
 //----IMPLEMTANCAO-DE-OPERADORES-SOBRECARREGADOS----
