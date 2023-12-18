@@ -12,7 +12,7 @@ Camada :: Camada(string nomeArquivo, string descricao){
 };
 
 Camada :: ~Camada(){
-
+    remove(imagem.c_str());
 };
 
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----

@@ -18,21 +18,17 @@ Edicao :: Edicao(string imagemFundo){
 //remove todos os arquivos utilizados mantendo a image resultante
 //libera amemoria alocada para os objetos da classe camada
 Edicao :: ~Edicao(){
-    
-    vector<string> nomesArquivos;
-    
+
     string edicaoFinal;
     string arquivo_copia = sobreporCamadas();
 
     edicaoFinal = string(DIR_TRABALHO) + "edicaoFinal.png";
 
     copiarConteudo(&edicaoFinal, arquivo_copia);
-    obterNomesArquivos(string(DIR_TRABALHO), &nomesArquivos);
+    remove(arquivo_copia.c_str());
 
-    for(unsigned n = 1; n < nomesArquivos.size(); n++){
-        if((string(DIR_TRABALHO) + nomesArquivos[n]) == edicaoFinal)
-            continue;
-        remove((string(DIR_TRABALHO) + nomesArquivos[n]).c_str());
+    for(unsigned n = 1; n < camadas.size(); n++){
+        delete camadas[n];
     }
 };
 
@@ -281,13 +277,14 @@ void Edicao :: exibirEdicao(){
     if(camadas.empty())
         return;
     
-    if(camadas.size() == 1){
-        exibirImagem((*camadas[0]).getArquivo());
-        return;
+    if(camadas.size() > 1){
+        arquivoCopia = sobreporCamadas();
+    }else{
+        arquivoCopia = (*camadas[0]).getArquivo();
     }
 
-    arquivoCopia = sobreporCamadas();
     exibirImagem(arquivoCopia);
+
 };
 
 //----IMPLEMTANCAO-DE-METODOS-PRIVADOS----
