@@ -282,6 +282,8 @@ void Edicao :: exibirEdicao(){
 
 //converte um arquivo de imagem qualquer para um .png
 string Edicao :: converterArquivo(string nomeArquivo){
+
+    setCor(1);
     
     PyObject* sys = PyImport_ImportModule("sys");
     PyObject* path = PyObject_GetAttrString(sys, "path");
@@ -295,19 +297,18 @@ string Edicao :: converterArquivo(string nomeArquivo){
         PyObject* pFunction = PyObject_GetAttrString(pModule, "converterExtensao");
         
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
-                
+            
+            mvprintw(15,0, "chamando funcao");
+
             PyObject* pArg = Py_BuildValue("s", (nomeArquivo).c_str());
             PyObject  *retorno = PyObject_CallObject(pFunction, pArg);
 
             if((retorno != NULL) && (PyUnicode_Check(retorno))){
-                
-                Py_DECREF(pArg);
-                Py_DECREF(retorno);
-                Py_DECREF(pFunction);
-                Py_DECREF(pModule);
-
-                return string(PyUnicode_AsUTF8(retorno));
+                nomeArquivo = string(PyUnicode_AsUTF8(retorno));
             }
+
+            mvprintw(15,0, "funcao foi chamada");
+
             
             Py_DECREF(pArg);
             Py_DECREF(retorno);
