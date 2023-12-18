@@ -29,7 +29,6 @@ class Camada{
         void removerFundo();
         void profundidadeCampo();
         void menuLuzCor();
-        void copiarConteudo(string*, string);
 
         double transparencia;
         string imagem;
