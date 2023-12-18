@@ -296,7 +296,8 @@ string Edicao :: converterArquivo(string nomeArquivo){
         getch();
 
         // OBtendo a referência da função Python
-        PyObject* pFunction = PyObject_GetAttrString(pModule, "converterArquivo");
+        PyObject* pFunction = PyObject_GetAttrString(pModule, "converterExtensao");
+        
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
             
             for(unsigned int indice = 1; indice < camadas.size(); indice++){
