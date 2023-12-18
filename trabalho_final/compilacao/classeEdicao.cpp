@@ -329,6 +329,7 @@ string Edicao :: sobreporCamadas(){
 
     setCor(1);
     mvprintw(15, 0, "Funcao sobrepor camadas send executada");
+    getch();
     
     string  imagemFundo,
             imagemFrente;
