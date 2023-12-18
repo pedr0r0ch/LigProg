@@ -203,6 +203,10 @@ void Camada :: removerFundo(){
 //aplica efeito de desfoque na intensidade escolhida pelo usuario
 void Camada :: profundidadeCampo(){
 
+    clear();
+    curs_set(0);
+    noecho();
+
     int opcao = -1;
     char tecla;
     double intensidade = 0;
@@ -210,94 +214,85 @@ void Camada :: profundidadeCampo(){
     string arquivo_copia = "";
     vector<string> opcoes = {"Voltar e cancelar operacao",
                              "Salvar e sair"};
-
     while(1){
-        while(1){
-                clear();
-                refresh();
+            clear();
+            refresh();
 
-                setCor(4);
-                mvprintw(0, 1, "! Use as teclas W, S e 'enter' para almentar");
-                mvprintw(1, 1, "ou diminuir o efeito de profundidade de campo");
-                resetCor();
+            setCor(4);
+            mvprintw(0, 1, "! Use as teclas W, S e 'enter' para almentar");
+            mvprintw(1, 1, "ou diminuir o efeito de profundidade de campo");
+            resetCor();
 
-                setCor(1);
-                mvprintw(3, 0, "O nivel padrao do efeito de profundidade de campo eh: 0%%");
-                mvprintw(4, 0, "Ajustar efeito de profundidade de campo para %.0f%%", (intensidade * 10.0));
+            setCor(1);
+            mvprintw(3, 0, "O nivel padrao do efeito de profundidade de campo eh: 0%%");
+            mvprintw(4, 0, "Ajustar efeito de profundidade de campo para %.0f%%", (intensidade * 10.0));
 
-                tecla = getch();
+            tecla = getch();
 
-                if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
-                    if(intensidade == 0.0){
-                        intensidade = 10;
-                        continue;
-                    }else{
-                        intensidade = intensidade - 1;
-                        continue;
-                    }
+            if(tecla == 'S' || tecla == 's' || tecla == KEY_DOWN){
+                if(intensidade == 0.0){
+                    intensidade = 10;
+                    continue;
+                }else{
+                    intensidade = intensidade - 1;
+                    continue;
                 }
-
-                if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
-                    if(intensidade == 10){
-                        intensidade = 0.0;
-                        continue;
-                    }else{
-                        intensidade = intensidade + 1;
-                        continue;
-                    }
-                }
-
-                if(tecla == 10 || tecla == 13){
-                    break;
-                }
-        }
-
-        if(arquivo_copia != "")
-            remove(arquivo_copia.c_str());
-        
-        clear();
-        curs_set(0);
-        noecho();
-
-        setCor(5);
-        mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
-        resetCor();
-        
-        PyObject  *sys = PyImport_ImportModule("sys");
-        PyObject  *path = PyObject_GetAttrString(sys, "path");
-        PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
-        
-        PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
-        if (modulo != nullptr) {
-
-            PyObject  *funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
-            if (funcao != nullptr && PyCallable_Check(funcao)) {
-                
-                PyObject  *argumentos = PyTuple_Pack(2, 
-                PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong(intensidade));
-
-                PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
-                
-
-                if(retorno != NULL){
-                    arquivo_copia = string(PyUnicode_AsUTF8(retorno));
-                }
-
-                Py_DECREF(retorno);
-                Py_DECREF(argumentos);
             }
-            Py_DECREF(funcao);                
-        }
 
-        Py_DECREF(sys);
-        Py_DECREF(path);
-        Py_DECREF(modulo);
+            if(tecla == 'W' || tecla == 'w' || tecla == KEY_UP){
+                if(intensidade == 10){
+                    intensidade = 0.0;
+                    continue;
+                }else{
+                    intensidade = intensidade + 1;
+                    continue;
+                }
+            }
 
-        if(arquivo_copia != "")
-            exibirImagem(arquivo_copia);
-
-        continue;
+            if(tecla == 10 || tecla == 13){
+                break;
+            }
     }
+
+    if(arquivo_copia != "")
+        remove(arquivo_copia.c_str());
+
+    setCor(5);
+    mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
+    resetCor();
+    
+    PyObject  *sys = PyImport_ImportModule("sys");
+    PyObject  *path = PyObject_GetAttrString(sys, "path");
+    PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
+    
+    PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
+    if (modulo != nullptr) {
+
+        PyObject  *funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
+        if (funcao != nullptr && PyCallable_Check(funcao)) {
+            
+            PyObject  *argumentos = PyTuple_Pack(2, 
+            PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong(intensidade));
+
+            PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
+            
+
+            if(retorno != NULL){
+                arquivo_copia = string(PyUnicode_AsUTF8(retorno));
+            }
+
+            Py_DECREF(retorno);
+            Py_DECREF(argumentos);
+        }
+        Py_DECREF(funcao);                
+    }
+
+    Py_DECREF(sys);
+    Py_DECREF(path);
+    Py_DECREF(modulo);
+
+    if(arquivo_copia != "")
+        exibirImagem(arquivo_copia);
 
     opcao = exibirOpcoes(opcoes); 
     
@@ -343,7 +338,7 @@ void Camada :: menuLuzCor(){
                                 "Salvar alteracoes e sair"};
     vector<string> opcoes_2;
 
-    vector<string> opcoes_3 = {"voltar e descartar alteracoes", "Salvar e voltar para o menu de edicoes gerais"};
+    vector<string> opcoes_3 = {"voltar e descartar alteracoes", "Salvar e voltar para o menu"};
 
     
 
@@ -354,20 +349,6 @@ void Camada :: menuLuzCor(){
             return;
         
         if(opcao_1 != 3){
-        /*
-            opcoes_2 = { "Voltar",
-                        "Diminuir " + efeitos[opcao_1] + " para o nivel 0",
-                        "Diminuir " + efeitos[opcao_1] + " para o nivel 1",
-                        "Diminuir " + efeitos[opcao_1] + " para o nivel 2",
-                        "Diminuir " + efeitos[opcao_1] + " para o nivel 3",
-                        "Manter " + efeitos[opcao_1] + " no nivel 4",
-                        "Almentar " + efeitos[opcao_1] + " para o nivel 5",
-                        "Almentar " + efeitos[opcao_1] + " para o nivel 6",
-                        "Almentar " + efeitos[opcao_1] + " para o nivel 7",
-                        "Almentar " + efeitos[opcao_1] + " para o nivel 8"}; 
-
-            opcao_2 = exibirOpcoes(opcoes_2);
-        */
 
             while(1){
                 clear();

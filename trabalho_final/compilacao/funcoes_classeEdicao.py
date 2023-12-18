@@ -18,7 +18,7 @@ def sobrepor(imagemFundo, imagemFrente, transparencia = 1.0):
     camada_1 = Image.open(imagemFundo)
     camada_2 = Image.open(imagemFrente)
     
-    Image.blend(camada_1, camada_2, transparencia).save(arquivoCopia)
+    Image.blend(camada_1, camada_2, 0.7).save(arquivoCopia)
 
     return arquivoCopia
 
