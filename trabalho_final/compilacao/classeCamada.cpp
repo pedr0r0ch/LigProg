@@ -1,4 +1,5 @@
 #include "/usr/include/python3.10/Python.h"
+#include "funcoesGlobais.h"
 #include "classeCamada.h"
 
 using namespace std;
@@ -130,7 +131,7 @@ string Camada :: getArquivo(){
 //remove o plano de fundo, restando apenas a imagem
 void Camada :: removerFundo(){
     
-    
+
     vector<string> opcoes =  { "Descartar alteracao e voltar",
                                "Salvar alteraco"};
     string arquivo_copia = "";
