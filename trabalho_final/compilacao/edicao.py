@@ -41,11 +41,12 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
         nova_camada_1.paste(camada_1, (int((maiorLargura - largura_camada1)/2), int((maiorAltura - altura_camada1)/2)))
         nova_camada_2.paste(camada_2, (int((maiorLargura - largura_camada2)/2), int((maiorAltura - altura_camada2)/2)))
 
-
-        imagemSobreposta = Image.blend(nova_camada_1, nova_camada_2, 0.7)
+        imagemSobreposta = Image.alpha_composite(nova_camada_1, nova_camada_2)
+        #imagemSobreposta = Image.blend(nova_camada_1, nova_camada_2, 0.7)
 
     else:
-        imagemSobreposta = Image.blend(camada_1, camada_2, 0.7)
+                imagemSobreposta = Image.alpha_composite(camada_1, camada_2)
+                #imagemSobreposta = Image.blend(camada_1, camada_2, 0.7)
     
     imagemSobreposta.save(arquivoCopia, "PNG")
     return arquivoCopia
