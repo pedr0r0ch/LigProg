@@ -362,8 +362,8 @@ string Edicao :: sobreporCamadas(){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
 
-                mvprintw(15, 0, "imagem frente : %s", imagemFrente.c_str());
-                mvprintw(15, 0, "imagem fundo : %s", imagemFundo.c_str());
+                mvprintw(15, 0, "imagem frente : %s                             ", imagemFrente.c_str());
+                mvprintw(16, 0, "imagem fundo : %s                               ", imagemFundo.c_str());
                 getch();
 
                 
