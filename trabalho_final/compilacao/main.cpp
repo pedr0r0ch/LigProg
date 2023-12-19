@@ -79,6 +79,8 @@ main(int argc, char**)
                 break;
             
             case 4:
+                refresh();
+                endwin();
                 return(1);
                 break;
         }

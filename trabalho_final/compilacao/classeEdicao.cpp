@@ -376,13 +376,13 @@ string Edicao :: sobreporCamadas(){
 };
 
 //obtem os nomes dos arquivos de um diretorio e os organiza em vetor de strings na formatacao necessaria para a funcaoe xibir opcoes
-void Edicao::obterNomesArquivos(const string caminho, vector<string>* nomesArquivos) { 
+void Edicao::obterNomesArquivos(const string caminho, vector<string>* nomesArquivos) {
     nomesArquivos->push_back("Voltar (! encerrar programa)");
 
     for (const auto& entry : fs::directory_iterator(caminho)) {
         if (fs::is_regular_file(entry.path())) {
-            // Verifica se a extensão é ".png"
-            if (entry.path().extension() == ".png") {
+            // Verifica se a extensão é ".png" e se o nome não começa com "copia"
+            if (entry.path().extension() == ".png" && entry.path().stem().string().find("copia") != 0) {
                 nomesArquivos->push_back(entry.path().filename().string());
             }
         }
