@@ -55,4 +55,4 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
         print(f"Erro: {e}")
         return None
     
-exibirArquivoImagem(sobrepor("../dir_trabalho/edicaoFinal.png", "../dir_trabalho/centro_de_tecnologia_BLCA.png", 1.0))
+exibirArquivoImagem(sobrepor("../dir_trabalho/edicaoFinal.png", "../dir_trabalho/centro_de_tecnologia_BLCA.png", 1))
