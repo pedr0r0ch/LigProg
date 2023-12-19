@@ -1,9 +1,10 @@
 
 from PIL import Image
+from globais import exibirArquivoImagem
 import os
 
 def fazerCopiaNome(caminho_arquivo):
-    diretorio, nome_arquivo = os.path.split(caminho_arquivo)ima
+    diretorio, nome_arquivo = os.path.split(caminho_arquivo)
 
     novo_caminho_arquivo = os.path.join(diretorio, ("copia_" + nome_arquivo))
 
@@ -13,7 +14,7 @@ def fazerCopiaNome(caminho_arquivo):
 
 def sobrepor(imagemFundo, imagemFrente, transparencia):
     try:
-        arquivoCopia = "arquivoCopia.png"
+        arquivoCopia = fazerCopiaNome(imagemFundo)
 
         camada_1 = Image.open(imagemFundo).convert('RGBA')
         camada_2 = Image.open(imagemFrente).convert('RGBA')
@@ -49,3 +50,5 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
         # Tratamento de erro genérico
         print(f"Erro: {e}")
         return None
+    
+exibirArquivoImagem(sobrepor("../dir_trabalho/edicaoFinal.png", "../dir_trabalho/centro_de_tecnologia_BLCA.png", 1.0))

@@ -185,3 +185,4 @@ void copiarConteudo(string *receptor, string doador){
 
 
 
+
