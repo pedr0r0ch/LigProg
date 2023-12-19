@@ -13,12 +13,14 @@ def fazerCopiaNome(caminho_arquivo):
 
 def sobrepor(imagemFundo, imagemFrente, transparencia = 1.0):
 
-    arquivoCopia = fazerCopiaNome(imagemFundo)
+    #arquivoCopia = fazerCopiaNome(imagemFundo)
+
+    arquivoCopia = "arquivoCopia.png"
 
     camada_1 = Image.open(imagemFundo)
     camada_2 = Image.open(imagemFrente)
     
-    Image.blend(camada_1, camada_2, 0.7).save(arquivoCopia)
+    Image.blend(camada_1, camada_2, 0.7).save(arquivoCopia, "PNG")
 
     return arquivoCopia
 
