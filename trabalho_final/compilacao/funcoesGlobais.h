@@ -23,5 +23,7 @@ void resetCor();
 
 void copiarConteudo(string *, string);
 
+string obterDiaHoraAtual();
+
 
 #endif

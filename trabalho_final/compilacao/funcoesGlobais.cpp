@@ -1,4 +1,9 @@
 #include <unistd.h>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+
 #include "funcoesGlobais.h"
 
 
@@ -183,6 +188,29 @@ void copiarConteudo(string *receptor, string doador){
     //finaliza a API
 };
 
+//retorna uma string contendo data e hora
+string obterDiaHoraAtual() {
+    auto agora = chrono::system_clock::now();
+    time_t tempoAtual = chrono::system_clock::to_time_t(agora);
 
+    ostringstream ss;
+    ss << put_time(localtime(&tempoAtual), "%Y%m%d_%H%M%S");
+
+    // Obter os milissegundos atuais
+    auto duracao = agora.time_since_epoch();
+    auto milissegundos = chrono::duration_cast<chrono::milliseconds>(duracao).count() % 1000;
+
+    // Adicionar os milissegundos à string
+    ss << '_' << setfill('0') << setw(3) << milissegundos;
+
+    // Substituir caracteres não permitidos por sublinhados
+    for (char& c : ss.str()) {
+        if (!isalnum(c) && c != '_' && c != '-') {
+            c = '_';
+        }
+    }
+
+    return ss.str();
+}
 
 

@@ -68,7 +68,7 @@ void Edicao :: addCamada(){
     if(descricao == "")
         descricao = "Descricao nao fornecida.";
 
-    nomeArquivo = string("../dir_trabalho/") + "copia_" + arquivos[opcao+1];
+    nomeArquivo = string("../dir_trabalho/") + "copia_" + obterDiaHoraAtual() + arquivos[opcao+1];
     
     copiarConteudo(&nomeArquivo, ("../dir_trabalho/" + arquivos[opcao+1]));
 
