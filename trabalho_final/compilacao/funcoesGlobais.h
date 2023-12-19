@@ -15,6 +15,8 @@ using namespace std;
 
 int exibirOpcoes(vector<string>&);
 
+void mensagemDeAviso(string);
+
 void exibirImagem(string);
 
 void setCor(int);

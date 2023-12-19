@@ -99,6 +99,24 @@ int exibirOpcoes(vector<string>& opcoes){ //funcao que exibe o menu interativo
     
 };
 
+void mensagemDeAviso(string mensagem){
+    clear();
+    curs_set(0);
+    
+    setCor(4);
+    mvprintw(0, 0, "Pressione enter para prosseguir");
+    setCor(5);
+    mvprintw(1, 0, "!! %s", mensagem.c_str());
+    resetCor();
+    getch();
+
+    clear();
+
+    setCor(5);
+    mvprintw(0, 0, "!! %s", mensagem.c_str());
+    resetCor();
+};
+
 void exibirImagem(string caminhoImagem){
     // exibe a imagem com as alteracoes mais recentes
 

@@ -15,7 +15,6 @@ Edicao :: Edicao(string imagemFundo){
     camadas.push_back(camadaPtr);
 };
 
-//remove todos os arquivos utilizados mantendo a image resultante
 //libera amemoria alocada para os objetos da classe camada
 Edicao :: ~Edicao(){
 
@@ -30,6 +29,9 @@ Edicao :: ~Edicao(){
     for(unsigned n = 1; n < camadas.size(); n++){
         delete camadas[n];
     }
+
+    mensagemDeAviso("A imagem resultante da edicao foi salva como 'edicaoFinal.png'");
+
 };
 
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----
@@ -68,7 +70,7 @@ void Edicao :: addCamada(){
     if(descricao == "")
         descricao = "Descricao nao fornecida.";
 
-    nomeArquivo = string("../dir_trabalho/") + "copia_" + obterDiaHoraAtual() + arquivos[opcao+1];
+    nomeArquivo = string("../dir_trabalho/") + "copia_" + obterDiaHoraAtual() + "_" + arquivos[opcao+1];
     
     copiarConteudo(&nomeArquivo, ("../dir_trabalho/" + arquivos[opcao+1]));
 
@@ -358,7 +360,8 @@ string Edicao :: sobreporCamadas(){
                 pArgs = PyTuple_Pack(2,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
                     PyUnicode_DecodeFSDefault(imagemFrente.c_str()));
-        
+
+                mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){

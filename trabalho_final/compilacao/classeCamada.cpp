@@ -6,7 +6,7 @@ using namespace std;
 
 //----CONSTRUTOR-E-DESTRUTOR---------------
 Camada :: Camada(string nomeArquivo, string descricao){
-    this->transparencia = 255;
+    this->transparencia = 1.0;
     this->imagem = nomeArquivo;
     this->descricao = descricao;
 };
@@ -80,10 +80,11 @@ void Camada :: edicoesGerais(){
 
     vector<string> menu = {
         "Voltar e cancelar operacao",
-        "Definir transparencia da camada",
+        /*"Definir transparencia da camada",*/
         "Recortar objeto e remover fundo",
         "Aplicar efeito de profundidade de campo",
         "Abrir menu de opcoes de cor e luz",
+        "Exibir a camada selecionada"
 
     };
 
@@ -93,20 +94,24 @@ void Camada :: edicoesGerais(){
         return;
 
     switch(opcao){
-        case 0:
+        /*case 0:
             setTransparencia();
             break;
-
-        case 1:
+        */
+        case 0:
             removerFundo();
             break;
         
-        case 2:
+        case 1:
             profundidadeCampo();
             break;
         
-        case 3:
+        case 2:
             menuLuzCor();
+            break;
+        
+        case 3:
+            exibirCamada();
             break;
     }
 };
@@ -137,15 +142,6 @@ void Camada :: removerFundo(){
     string arquivo_copia = "";
     int opcao;
         
-    
-    clear();
-    curs_set(0);
-    noecho();
-
-    setCor(5);
-    mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
-    resetCor();
-
     PyObject  *sys = PyImport_ImportModule("sys");
     PyObject  *path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
@@ -158,6 +154,7 @@ void Camada :: removerFundo(){
 
             PyObject  *argumento = Py_BuildValue("s", imagem.c_str());
 
+            mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
             PyObject  *retorno = PyObject_CallFunctionObjArgs(funcao, argumento, nullptr);
             
             if(retorno != NULL){
@@ -259,10 +256,6 @@ void Camada :: profundidadeCampo(){
 
     if(arquivo_copia != "")
         remove(arquivo_copia.c_str());
-
-    setCor(5);
-    mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
-    resetCor();
     
     PyObject  *sys = PyImport_ImportModule("sys");
     PyObject  *path = PyObject_GetAttrString(sys, "path");
@@ -277,6 +270,7 @@ void Camada :: profundidadeCampo(){
             PyObject  *argumentos = PyTuple_Pack(2, 
             PyUnicode_DecodeFSDefault(imagem.c_str()), PyLong_FromLong(intensidade));
 
+            mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
             PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
             
 
@@ -401,13 +395,6 @@ void Camada :: menuLuzCor(){
             if(arquivo_copia != "")
                 remove(arquivo_copia.c_str());
 
-            clear();
-            curs_set(0);
-            noecho();
-
-            setCor(5);
-            mvprintw(0, 0, "!! Aguarde ate que a operaco saja concluida");
-            resetCor();
             
             PyObject  *sys = PyImport_ImportModule("sys");
             PyObject  *path = PyObject_GetAttrString(sys, "path");
@@ -423,6 +410,7 @@ void Camada :: menuLuzCor(){
                     PyObject *argumentos = PyTuple_Pack(2, PyUnicode_DecodeFSDefault(arquivo_base.c_str()),
                                    PyFloat_FromDouble(intensidade));
 
+                    mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
                     PyObject  *retorno = PyObject_CallObject(funcao, argumentos);
 
                     if((retorno != NULL) && (PyUnicode_Check(retorno))){
@@ -450,6 +438,7 @@ void Camada :: menuLuzCor(){
         if(opcao_1 == 0)
             if(arquivo_copia != ""){
                 copiarConteudo(&imagem, arquivo_base);
+                remove(arquivo_base.c_str());
                 remove(arquivo_copia.c_str());
                 return;
             }
