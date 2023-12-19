@@ -18,9 +18,6 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
     camada_1 = Image.open(imagemFundo).convert('RGBA')
     camada_2 = Image.open(imagemFrente).convert('RGBA')
 
-    alpha = int(transparencia*255)
-    camada_2.putalpha(alpha)
-
     # Obter as dimensões da imagem maior e da imagem menor
     largura_camada1, altura_camada1 = camada_1.size
     largura_camada2, altura_camada2 = camada_2.size

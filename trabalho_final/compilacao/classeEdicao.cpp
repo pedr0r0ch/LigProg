@@ -327,10 +327,6 @@ void Edicao :: converterArquivo(string &nomeArquivo){
 //gera um arquivo, resultado de todas as camadas sobrepostas
 string Edicao :: sobreporCamadas(){
 
-    setCor(1);
-    mvprintw(15, 0, "Funcao sobrepor camadas send executada");
-    getch();
-    
     string  imagemFundo,
             imagemFrente;
 
@@ -349,39 +345,23 @@ string Edicao :: sobreporCamadas(){
     pModule = PyImport_ImportModule("edicao");
 
     if (pModule != nullptr) {
-        mvprintw(15, 0, "modulo diferente de null");
-        getch();
 
         // OBtendo a referência da função Python
         pFunction = PyObject_GetAttrString(pModule, "sobrepor");
         if (pFunction != nullptr && PyCallable_Check(pFunction)) {
-             mvprintw(15, 0, "funcao diferente de null");
-            getch();
-
             for(unsigned int indice = 1; indice < camadas.size(); indice++){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
 
-                mvprintw(15, 0, "imagem frente : %s                             ", imagemFrente.c_str());
-                mvprintw(16, 0, "imagem fundo : %s                               ", imagemFundo.c_str());
-                getch();
-
-                
                 pArgs = PyTuple_Pack(3,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
                     PyUnicode_DecodeFSDefault(imagemFrente.c_str()),
                     PyFloat_FromDouble((*camadas[indice]).getTransparencia()));
-                
-                mvprintw(15, 0, "Chamando a funcao python");
-                getch();
-
+        
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
-                    
-                    mvprintw(15, 0, "Valor de retorno: %s", imagemFundo.c_str());
-                    getch();
                 }
             };
 
