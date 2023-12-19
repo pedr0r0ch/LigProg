@@ -296,7 +296,7 @@ void Edicao :: converterArquivo(string &nomeArquivo){
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    PyObject* pModule = PyImport_ImportModule("funcoes_funcoesGlobais");
+    PyObject* pModule = PyImport_ImportModule("globais");
 
     if (pModule != nullptr) {
 
@@ -346,7 +346,7 @@ string Edicao :: sobreporCamadas(){
     sys = PyImport_ImportModule("sys");
     path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
-    pModule = PyImport_ImportModule("funcoes_classeEdicao");
+    pModule = PyImport_ImportModule("edicao");
 
     if (pModule != nullptr) {
         mvprintw(15, 0, "modulo diferente de null");

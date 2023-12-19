@@ -5,7 +5,7 @@ from PIL import Image
 from PIL import ImageFilter
 from PIL import ImageEnhance
 
-from funcoes_funcoesGlobais import fazerCopiaNome
+from globais import fazerCopiaNome
 
 
 def manterObjeto(imagemOriginal):

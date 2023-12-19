@@ -1,8 +1,6 @@
-#funcoes que os metodos da classe Edicao utilizam
 
 from PIL import Image
 import os
-
 
 def fazerCopiaNome(caminho_arquivo):
     diretorio, nome_arquivo = os.path.split(caminho_arquivo)
@@ -11,7 +9,7 @@ def fazerCopiaNome(caminho_arquivo):
 
     return novo_caminho_arquivo
 
-def sobrepor(imagemFundo, imagemFrente, transparencia = 1.0):
+def sobrepor(imagemFundo, imagemFrente, transparencia):
 
     #arquivoCopia = fazerCopiaNome(imagemFundo)
 
@@ -23,5 +21,3 @@ def sobrepor(imagemFundo, imagemFrente, transparencia = 1.0):
     Image.blend(camada_1, camada_2, 0.7).save(arquivoCopia, "PNG")
 
     return arquivoCopia
-
-

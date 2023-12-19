@@ -150,7 +150,7 @@ void Camada :: removerFundo(){
     PyObject  *path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
+    PyObject  *modulo = PyImport_ImportModule((char *)"camada");
     if (modulo != nullptr) {
 
         PyObject  *funcao = PyObject_GetAttrString(modulo, "manterObjeto");
@@ -268,7 +268,7 @@ void Camada :: profundidadeCampo(){
     PyObject  *path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    PyObject  *modulo = PyImport_ImportModule((char *)"funcoes_classeCamada");
+    PyObject  *modulo = PyImport_ImportModule((char *)"camada");
     if (modulo != nullptr) {
 
         PyObject  *funcao = PyObject_GetAttrString(modulo, "efeitoDesfoque");
@@ -413,7 +413,7 @@ void Camada :: menuLuzCor(){
             PyObject  *path = PyObject_GetAttrString(sys, "path");
             PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
             
-            PyObject  *modulo = PyImport_ImportModule("funcoes_classeCamada");
+            PyObject  *modulo = PyImport_ImportModule("camada");
             
             if (modulo != nullptr) {
 

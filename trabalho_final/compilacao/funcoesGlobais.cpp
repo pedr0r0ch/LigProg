@@ -108,7 +108,7 @@ void exibirImagem(string caminhoImagem){
     PyObject* path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    PyObject* pModule = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
+    PyObject* pModule = PyImport_ImportModule((char *)"globais");
     if (pModule != nullptr) {
 
         // OBtendo a referência da função Python
@@ -158,7 +158,7 @@ void copiarConteudo(string *receptor, string doador){
     path = PyObject_GetAttrString(sys, "path");
     PyList_Append(path, PyUnicode_DecodeFSDefault(DIR_COMPILACAO));
     
-    modulo = PyImport_ImportModule((char *)"funcoes_funcoesGlobais");
+    modulo = PyImport_ImportModule((char *)"globais");
     if (modulo != nullptr) {
 
         funcao = PyObject_GetAttrString(modulo, "copiarArquivoImagem");
