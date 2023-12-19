@@ -20,31 +20,35 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
         camada_2 = Image.open(imagemFrente).convert('RGBA')
 
         # Obter as dimensões da imagem maior e da imagem menor
-        largura_maior, altura_maior = camada_1.size
-        largura_menor, altura_menor = camada_2.size
+        largura_camada1, altura_camada1 = camada_1.size
+        largura_camada2, altura_camada2 = camada_2.size
 
-        # Calcular o offset para centralizar a imagem menor na imagem maior
-        offset_x = (largura_maior - largura_menor) // 2
-        offset_y = (altura_maior - altura_menor) // 2
+        if((largura_camada1, altura_camada1) != (largura_camada2, altura_camada2)):
+            if(largura_camada1 > largura_camada2):
+                maiorLargura = largura_camada1
+            else:
+                maiorLargura = largura_camada2
 
-        # Criar uma imagem em branco do mesmo tamanho da imagem maior
-        imagem_resultante = Image.new('RGBA', (largura_maior, altura_maior), (0, 0, 0, 0))
+            if(altura_camada1 > altura_camada2):
+                maiorAltura = altura_camada1
+            else:
+                maiorAltura = altura_camada2
 
-        # Colocar a imagem menor no centro da imagem em branco
-        imagem_resultante.paste(camada_2, (offset_x, offset_y), camada_2)
+            nova_camada_1 = Image.new('RGBA', (maiorLargura, maiorAltura), (0, 0, 0, 0))
+            nova_camada_2 = Image.new('RGBA', (maiorLargura, maiorAltura), (0, 0, 0, 0))
 
-        # Aplicar a transparência à imagem de frente
-        imagem_frente_transparente = Image.new('RGBA', (largura_maior, altura_maior), (0, 0, 0, 0))
-        imagem_frente_transparente = Image.alpha_composite(imagem_frente_transparente, camada_2)
-        imagem_frente_transparente.putalpha(int(transparencia * 255))
+            nova_camada_1.paste(camada_1, ((maiorLargura - largura_camada1)/2,(maiorAltura - altura_camada1)/2))
+            nova_camada_2.paste(camada_2, ((maiorLargura - largura_camada2)/2,(maiorAltura - altura_camada2)/2))
 
-        # Sobrepor as imagens
-        imagem_sobreposta = Image.alpha_composite(camada_1, imagem_frente_transparente)
 
-        # Salvar a imagem sobreposta
-        imagem_sobreposta.save(arquivoCopia, "PNG")
+            imagemSobreposta = Image.blend(nova_camada_1, nova_camada_2, transparencia)
 
+        else:
+            imagemSobreposta = Image.blend(camada_1, camada_2, transparencia)
+        
+        imagemSobreposta.save(arquivoCopia, "PNG")
         return arquivoCopia
+
 
     except Exception as e:
         # Tratamento de erro genérico
