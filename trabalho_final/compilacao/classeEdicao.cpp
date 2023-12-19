@@ -361,6 +361,11 @@ string Edicao :: sobreporCamadas(){
             for(unsigned int indice = 1; indice < camadas.size(); indice++){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
+
+                mvprintw(15, 0, "imagem frente : %s", imagemFrente.c_str());
+                mvprintw(15, 0, "imagem fundo : %s", imagemFundo.c_str());
+                getch();
+
                 
                 pArgs = PyTuple_Pack(3,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
@@ -371,11 +376,6 @@ string Edicao :: sobreporCamadas(){
                 getch();
 
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
-                
-                imagemFundo = string(PyUnicode_AsUTF8(retorno));
-                    
-                mvprintw(15, 0, "Valor de retorno: %s", imagemFundo.c_str());
-                getch();
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
