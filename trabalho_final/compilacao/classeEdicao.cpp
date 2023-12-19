@@ -371,6 +371,11 @@ string Edicao :: sobreporCamadas(){
                 getch();
 
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
+                
+                imagemFundo = string(PyUnicode_AsUTF8(retorno));
+                    
+                mvprintw(15, 0, "Valor de retorno: %s", imagemFundo.c_str());
+                getch();
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
