@@ -36,8 +36,8 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
         nova_camada_1 = Image.new('RGBA', (maiorLargura, maiorAltura), (0, 0, 0, 0))
         nova_camada_2 = Image.new('RGBA', (maiorLargura, maiorAltura), (0, 0, 0, 0))
 
-        nova_camada_1.paste(camada_1, ((maiorLargura - largura_camada1)/2,(maiorAltura - altura_camada1)/2))
-        nova_camada_2.paste(camada_2, ((maiorLargura - largura_camada2)/2,(maiorAltura - altura_camada2)/2))
+        nova_camada_1.paste(camada_1, ((int)(maiorLargura - largura_camada1)/2, (int)(maiorAltura - altura_camada1)/2))
+        nova_camada_2.paste(camada_2, ((int)(maiorLargura - largura_camada2)/2, (int)(maiorAltura - altura_camada2)/2))
 
 
         imagemSobreposta = Image.blend(nova_camada_1, nova_camada_2, 0.7)
