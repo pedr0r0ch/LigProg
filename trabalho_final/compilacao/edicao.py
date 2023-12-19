@@ -12,7 +12,7 @@ def fazerCopiaNome(caminho_arquivo):
 
 
 
-def sobrepor(imagemFundo, imagemFrente, transparencia):
+def sobrepor(imagemFundo, imagemFrente):
     arquivoCopia = fazerCopiaNome(imagemFundo)
 
     camada_1 = Image.open(imagemFundo).convert('RGBA')
@@ -50,5 +50,3 @@ def sobrepor(imagemFundo, imagemFrente, transparencia):
     
     imagemSobreposta.save(arquivoCopia, "PNG")
     return arquivoCopia
-    
-exibirArquivoImagem(sobrepor("../dir_trabalho/edicaoFinal.png", "../dir_trabalho/centro_de_tecnologia_BLCA.png", 1))

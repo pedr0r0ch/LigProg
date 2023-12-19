@@ -68,8 +68,10 @@ void Edicao :: addCamada(){
     if(descricao == "")
         descricao = "Descricao nao fornecida.";
 
-    nomeArquivo = string("../dir_trabalho/") + arquivos[opcao+1];
+    nomeArquivo = string("../dir_trabalho/") + "copia_" + arquivos[opcao+1];
     
+    copiarConteudo(&nomeArquivo, ("../dir_trabalho/" + arquivos[opcao+1]));
+
     converterArquivo(nomeArquivo);
     
     Camada* camada_ptr = new Camada(nomeArquivo, descricao);
@@ -353,10 +355,9 @@ string Edicao :: sobreporCamadas(){
 
                 imagemFrente = (*camadas[indice]).getArquivo();
 
-                pArgs = PyTuple_Pack(3,
+                pArgs = PyTuple_Pack(2,
                     PyUnicode_DecodeFSDefault(imagemFundo.c_str()),
-                    PyUnicode_DecodeFSDefault(imagemFrente.c_str()),
-                    PyFloat_FromDouble((*camadas[indice]).getTransparencia()));
+                    PyUnicode_DecodeFSDefault(imagemFrente.c_str()));
         
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
 
