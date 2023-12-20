@@ -29,6 +29,7 @@ Edicao :: ~Edicao(){
     for(unsigned n = 1; n < camadas.size(); n++){
         delete camadas[n];
     }
+
 };
 
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----

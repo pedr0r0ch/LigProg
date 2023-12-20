@@ -42,7 +42,7 @@ main(int argc, char**)
         init_pair(5, COLOR_RED, COLOR_BLACK);
     }
 
-    Edicao edicao;
+    Edicao* edicao = new Edicao();
     vector<string> menu = {  "Voltar (! encerrar programa)",\
                             "Adicionar nova camada",\
                             "Alterar prioridade entre as camadas",\
@@ -51,7 +51,7 @@ main(int argc, char**)
                             "Salvar edicao e encerrar programa"};
 
     Py_Initialize();
-    while(1){
+    while(edicao){
         opcao = exibirOpcoes(menu);
         switch(opcao){
             case -1:
@@ -60,29 +60,30 @@ main(int argc, char**)
                 exit(1);
 
             case 0:
-                edicao.adicionarCamada();
+                (*edicao).adicionarCamada();
                 break;
             
             case 1:
-                edicao.alterarPrioridade();
+                (*edicao).alterarPrioridade();
                 break;
 
             case 2:
-                indice_camada = edicao.selecionarCamada();
+                indice_camada = (*edicao).selecionarCamada();
                 if (indice_camada == -1)
                     break;
-                edicao.edicoesGerais(indice_camada);
+                (*edicao).edicoesGerais(indice_camada);
                 break;
 
             case 3:
-                edicao.exibirEdicao();
+                (*edicao).exibirEdicao();
                 break;
             
             case 4:
+                delete edicao;
+                edicao = nullptr;
                 refresh();
                 endwin();
-                return(0);
-                
+                break;
         }
     }
 
