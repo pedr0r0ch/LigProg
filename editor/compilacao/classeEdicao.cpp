@@ -374,7 +374,7 @@ string Edicao :: sobreporCamadas(){
         Py_DECREF(pModule);
     }
 
-    for(int n = 0;  n < arquivosCopia.size(); n++)
+    for(unsigned n = 0;  n < arquivosCopia.size(); n++)
         if(arquivosCopia[n] != imagemFundo)
             remove(arquivosCopia[n].c_str());
     
