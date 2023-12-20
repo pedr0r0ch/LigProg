@@ -7,10 +7,10 @@ namespace fs = std::filesystem;
 
 //----CONSTRUTOR-E-DESTRUTOR---------------|
 
-Edicao :: Edicao(string imagemFundo){
+/*Edicao :: Edicao(string imagemFundo){
     Camada* camadaPtr = new Camada(imagemFundo, "Imagem de fundo padrao");
     camadas.push_back(camadaPtr);
-};
+};*/
 
 //libera amemoria alocada para os objetos da classe camada
 Edicao :: ~Edicao(){

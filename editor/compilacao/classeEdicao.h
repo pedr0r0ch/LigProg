@@ -16,7 +16,7 @@
 class Edicao{
     public:
         
-        Edicao(string);
+        //Edicao(string);
         ~Edicao();
 
         void adicionarCamada(); // inclui uma nova camada
