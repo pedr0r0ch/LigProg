@@ -330,6 +330,7 @@ string Edicao :: sobreporCamadas(){
 
     string  imagemFundo,
             imagemFrente;
+    string imagemCopia_anterior = "";
 
     PyObject    *sys,
                 *path,
@@ -360,9 +361,12 @@ string Edicao :: sobreporCamadas(){
 
                 mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
+                if(imagemCopia_anterior != "")
+                    remove(imagemCopia_anterior.c_str());
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
+                    imagemCopia_anterior = imagemFundo;
                 }
             };
 
