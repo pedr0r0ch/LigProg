@@ -81,8 +81,7 @@ main(int argc, char**)
             case 4:
                 refresh();
                 endwin();
-                Py_Finalize();//finaliza a API
-                return(1);
+                return(0);
                 
         }
     }
