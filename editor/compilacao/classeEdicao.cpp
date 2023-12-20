@@ -26,10 +26,9 @@ Edicao :: ~Edicao(){
     copiarConteudo(&edicaoFinal, arquivo_copia);
     remove(arquivo_copia.c_str());
 
-    for(unsigned n = 1; n < camadas.size(); n++){
+    for(unsigned n = 0; n < camadas.size(); n++){
         delete camadas[n];
     }
-
 };
 
 //----IMPLEMENTACAO-DE-METODOS-PUBLICOS----
