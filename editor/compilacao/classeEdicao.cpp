@@ -330,7 +330,7 @@ string Edicao :: sobreporCamadas(){
 
     string  imagemFundo,
             imagemFrente;
-    string imagemCopia_anterior = "";
+    vector <string> arquivosCopia;
 
     PyObject    *sys,
                 *path,
@@ -361,12 +361,10 @@ string Edicao :: sobreporCamadas(){
 
                 mensagemDeAviso("Aguarde ate ate que a operacao seja concluida");
                 PyObject  *retorno = PyObject_CallObject(pFunction, pArgs);
-                if(imagemCopia_anterior != "")
-                    remove(imagemCopia_anterior.c_str());
 
                 if((retorno != NULL) && (PyUnicode_Check(retorno))){
                     imagemFundo = string(PyUnicode_AsUTF8(retorno));
-                    imagemCopia_anterior = imagemFundo;
+                    arquivosCopia.push_back(imagemFundo);
                 }
             };
 
@@ -376,7 +374,11 @@ string Edicao :: sobreporCamadas(){
         Py_DECREF(pModule);
     }
 
-    return imagemFundo;      
+    for(int n = 0;  n < arquivosCopia.size(); n++)
+        if(arquivosCopia[n] != imagemFundo)
+            remove(arquivosCopia[n].c_str());
+    
+    return imagemFundo;
 };
 
 //obtem os nomes dos arquivos de um diretorio e os organiza em vetor de strings na formatacao necessaria para a funcaoe xibir opcoes
